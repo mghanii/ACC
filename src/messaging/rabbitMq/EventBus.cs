@@ -1,8 +1,9 @@
 ﻿using ACC.Common.Extensions;
 using ACC.Common.Messaging;
+using Microsoft.AspNetCore.Builder;
 using RawRabbit;
 using RawRabbit.Pipe.Middleware;
-using System.Reflection;
+using System;
 using System.Threading.Tasks;
 
 namespace ACC.Messaging.RabbitMq
@@ -10,35 +11,55 @@ namespace ACC.Messaging.RabbitMq
     public class EventBus : IEventBus
     {
         private readonly IBusClient _busClient;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly RabbitMqOptions _rabbitMqOptions;
 
-        public EventBus(IBusClient busClient)
+        public EventBus(IApplicationBuilder app)
         {
-            _busClient = busClient;
+            _serviceProvider = (IServiceProvider)app.ApplicationServices.GetService(typeof(IServiceProvider));
+            _busClient = (IBusClient)_serviceProvider.GetService(typeof(IBusClient));
+            _rabbitMqOptions = (RabbitMqOptions)_serviceProvider.GetService(typeof(RabbitMqOptions));
         }
 
         public async Task PublishAsync<TMessage>(TMessage message)
             where TMessage : IMessage
         {
-            await _busClient.PublishAsync(message)
+            await _busClient.PublishAsync(message, ctx => ctx.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TMessage>())))
                 .AnyContext();
         }
 
-        public async Task SubscribeCommandAsync<TCommand>(ICommandHandler<TCommand> handler)
+        public IEventBus SubscribeCommand<TCommand>(string @namespace)
             where TCommand : ICommand
         {
-            await _busClient.SubscribeAsync<TCommand>(msg => handler.HandleAsync(msg),
-                             ctx => ctx.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TCommand>())))
-                             .AnyContext();
+            var handler = (ICommandHandler<TCommand>)_serviceProvider
+                              .GetService(typeof(ICommandHandler<TCommand>));
+
+            _busClient.SubscribeAsync<TCommand>(msg => handler.HandleAsync(msg),
+                            ctx => ctx.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TCommand>(@namespace))));
+
+            return this;
         }
 
-        public async Task SubscribeEventAsync<TEvent>(IEventHandler<TEvent> handler)
+        public IEventBus SubscribeEvent<TEvent>(string @namespace)
             where TEvent : IEvent
         {
-            await _busClient.SubscribeAsync<TEvent>(msg => handler.HandleAsync(msg),
-                ctx => ctx.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TEvent>())))
-                .AnyContext();
+            var handler = (IEventHandler<TEvent>)_serviceProvider
+                                .GetService(typeof(IEventHandler<TEvent>));
+
+            _busClient.SubscribeAsync<TEvent>(msg => handler.HandleAsync(msg),
+                ctx => ctx.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TEvent>(@namespace))));
+
+            return this;
         }
 
-        private static string GetQueueName<T>() => $"{Assembly.GetEntryAssembly().GetName()}/{typeof(T).Name}";
+        private string GetQueueName<T>(string @namespace = null)
+        {
+            if (@namespace == null)
+            {
+                @namespace = _rabbitMqOptions.Namespace;
+            }
+
+            return $"{@namespace}_{typeof(T).Name}";
+        }
     }
 }

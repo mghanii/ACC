@@ -1,16 +1,13 @@
-using ACC.Common.Messaging;
 using ACC.Messaging.RabbitMq;
 using ACC.Persistence.Mongo;
-using ACC.Services.Vehicles.Events;
-using ACC.Services.Vehicles.Handlers;
-using ACC.Services.Vehicles.Repositories;
+using ACC.Services.VehicleConnectivity.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ACC.Services.Vehicles
+namespace ACC.Services.VehicleConnectivity
 {
     public class Startup
     {
@@ -24,13 +21,9 @@ namespace ACC.Services.Vehicles
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
             services.AddLogging();
             services.AddMongoDB(Configuration, "mongo");
-            services.AddTransient(typeof(IEventHandler<VehicleStatusReportedEvent>), typeof(VehicleStatusReportedHandler));
-
             services.AddScoped<IVehicleRepository, VehicleRepository>();
-            services.AddScoped<IVehicleHistoryRepository, VehicleHistoryRepository>();
             services.AddRabbitMq(Configuration, "rabbitmq");
         }
 
@@ -52,9 +45,6 @@ namespace ACC.Services.Vehicles
             {
                 endpoints.MapControllers();
             });
-
-            app.UseRabbitMq()
-                .SubscribeEvent<VehicleStatusReportedEvent>("connectivity");
         }
     }
 }

@@ -6,8 +6,8 @@ namespace ACC.Common.Messaging
     {
         Task PublishAsync<TMessage>(TMessage message) where TMessage : IMessage;
 
-        Task SubscribeEventAsync<TEvent>(IEventHandler<TEvent> handler) where TEvent : IEvent;
+        IEventBus SubscribeEvent<TEvent>(string @namespace) where TEvent : IEvent;
 
-        Task SubscribeCommandAsync<TCommand>(ICommandHandler<TCommand> handler) where TCommand : ICommand;
+        IEventBus SubscribeCommand<TCommand>(string @namespace) where TCommand : ICommand;
     }
 }
