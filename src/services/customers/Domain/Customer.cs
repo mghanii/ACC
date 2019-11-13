@@ -1,6 +1,5 @@
 ﻿using ACC.Common.Exceptions;
 using ACC.Common.Types;
-using System;
 
 namespace ACC.Services.Customers.Domain
 {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ACC.Common.Types
+﻿namespace ACC.Common.Types
 {
     public interface IIdentifiable<Tkey>
     {
