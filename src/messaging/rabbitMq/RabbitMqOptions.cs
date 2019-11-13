@@ -1,0 +1,8 @@
+﻿using RawRabbit.Configuration;
+
+namespace ACC.Messaging.RabbitMq
+{
+    public class RabbitMqOptions : RawRabbitConfiguration
+    {
+    }
+}

@@ -5,13 +5,15 @@ namespace ACC.Services.Customers.Domain
 {
     public class Customer : EntityBase, IIdentifiable
     {
+        public string Email { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public Address Address { get; private set; } = new Address();
 
-        public Customer(string id, string firstName, string lastName)
+        public Customer(string id, string email, string firstName, string lastName)
             : base(id)
         {
+            Email = email;
             SetFirstName(firstName);
             SetLastName(lastName);
         }

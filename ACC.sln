@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Vehicles", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Common", "src\common\ACC.Common.csproj", "{801B9B63-0687-4E2F-876E-C26E3D95F8B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.Persistence.Mongo", "src\persistence\mongo\ACC.Persistence.Mongo.csproj", "{4DC87F69-5ED3-4961-8328-5D5939DBEC70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Persistence.Mongo", "src\persistence\mongo\ACC.Persistence.Mongo.csproj", "{4DC87F69-5ED3-4961-8328-5D5939DBEC70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.Messaging.RabbitMq", "src\messaging\rabbitMq\ACC.Messaging.RabbitMq.csproj", "{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4DC87F69-5ED3-4961-8328-5D5939DBEC70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DC87F69-5ED3-4961-8328-5D5939DBEC70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DC87F69-5ED3-4961-8328-5D5939DBEC70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
