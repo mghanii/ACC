@@ -1,5 +1,6 @@
 using ACC.Messaging.RabbitMq;
 using ACC.Persistence.Mongo;
+using ACC.Services.VehicleConnectivity.Domain;
 using ACC.Services.VehicleConnectivity.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,9 +23,12 @@ namespace ACC.Services.VehicleConnectivity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
-            services.AddMongoDB(Configuration, "mongo");
-            services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddRabbitMq(Configuration, "rabbitmq");
+
+            services.AddMongoDB(Configuration, "mongo");
+            services.AddMongoRepository<Vehicle>("vehicles");
+
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +49,8 @@ namespace ACC.Services.VehicleConnectivity
             {
                 endpoints.MapControllers();
             });
+
+            app.UseRabbitMq();
         }
     }
 }

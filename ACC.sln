@@ -13,9 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Common", "src\common\AC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Persistence.Mongo", "src\persistence\mongo\ACC.Persistence.Mongo.csproj", "{4DC87F69-5ED3-4961-8328-5D5939DBEC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.Messaging.RabbitMq", "src\messaging\rabbitMq\ACC.Messaging.RabbitMq.csproj", "{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Messaging.RabbitMq", "src\messaging\rabbitMq\ACC.Messaging.RabbitMq.csproj", "{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.Services.VehicleConnectivity", "src\services\connectivity\ACC.Services.VehicleConnectivity.csproj", "{538A4D27-F772-475C-A604-2C87217F5F96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.VehicleConnectivity", "src\services\connectivity\ACC.Services.VehicleConnectivity.csproj", "{538A4D27-F772-475C-A604-2C87217F5F96}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A870DE37-3552-4DE5-B5F2-516D8B4B6880}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.Services.Vehicles.UnitTests", "tests\services\ACC.Services.Vehicles.UnitTests\ACC.Services.Vehicles.UnitTests.csproj", "{9FB6F5BE-0187-4438-994E-A6BF5427A260}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.Services.Tracking", "src\Services\tracking\ACC.Services.Tracking.csproj", "{8846AE55-71C1-4D17-B88B-993CBDD5CAB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,9 +57,20 @@ Global
 		{538A4D27-F772-475C-A604-2C87217F5F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{538A4D27-F772-475C-A604-2C87217F5F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{538A4D27-F772-475C-A604-2C87217F5F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB6F5BE-0187-4438-994E-A6BF5427A260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB6F5BE-0187-4438-994E-A6BF5427A260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB6F5BE-0187-4438-994E-A6BF5427A260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB6F5BE-0187-4438-994E-A6BF5427A260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8846AE55-71C1-4D17-B88B-993CBDD5CAB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8846AE55-71C1-4D17-B88B-993CBDD5CAB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8846AE55-71C1-4D17-B88B-993CBDD5CAB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8846AE55-71C1-4D17-B88B-993CBDD5CAB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9FB6F5BE-0187-4438-994E-A6BF5427A260} = {A870DE37-3552-4DE5-B5F2-516D8B4B6880}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FDF7DFD-7FD1-444B-96C0-91140A880287}

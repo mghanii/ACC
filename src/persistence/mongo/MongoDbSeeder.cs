@@ -1,4 +1,6 @@
+using ACC.Common.Extensions;
 using MongoDB.Driver;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ACC.Persistence.Mongo
@@ -14,7 +16,17 @@ namespace ACC.Persistence.Mongo
 
         public async Task SeedAsync()
         {
-            await CustomSeedAsync();
+            var cursor = await Database.ListCollectionsAsync()
+                .AnyContext();
+
+            var collections = await cursor.ToListAsync()
+                .AnyContext();
+
+            if (!collections.Any())
+            {
+                await CustomSeedAsync()
+                    .AnyContext();
+            }
         }
 
         protected virtual async Task CustomSeedAsync()

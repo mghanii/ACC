@@ -1,8 +1,12 @@
+using ACC.Services.Customers.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ACC.Persistence.Mongo;
+using ACC.Messaging.RabbitMq;
+using ACC.Services.Customers.Domain;
 
 namespace ACC.Services.Customers
 {
@@ -19,6 +23,15 @@ namespace ACC.Services.Customers
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc();
+            services.AddLogging();
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddRabbitMq(Configuration, "rabbitmq");
+
+            services.AddMongoDB(Configuration, "mongo");
+            services.AddMongoRepository<Customer>("customers");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +52,8 @@ namespace ACC.Services.Customers
             {
                 endpoints.MapControllers();
             });
+
+            app.UseRabbitMq();
         }
     }
 }

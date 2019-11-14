@@ -6,7 +6,5 @@ namespace ACC.Services.Vehicles.Queries
 {
     public class GetVehiclesQuery : IQuery<IEnumerable<VehicleDto>>
     {
-        public string Customer { get; set; }
-        public string Status { get; set; }
     }
 }

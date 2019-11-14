@@ -6,40 +6,28 @@ namespace ACC.Services.Customers.Domain
     public class Customer : EntityBase, IIdentifiable
     {
         public string Email { get; private set; }
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
+        public string Name { get; private set; }
         public Address Address { get; private set; } = new Address();
 
-        public Customer(string id, string email, string firstName, string lastName)
+        public Customer(string id, string email, string name)
             : base(id)
         {
             Email = email;
-            SetFirstName(firstName);
-            SetLastName(lastName);
+            SetName(name);
         }
 
-        public void SetFirstName(string firstName)
+        public void SetName(string name)
         {
-            if (string.IsNullOrWhiteSpace(firstName))
+            if (string.IsNullOrWhiteSpace(name))
             {
-                throw new AccException("customer_first_name", "Customer first name can not be null or empty");
+                throw new AccException("invalid_customer_name", "Customer name can not be null or empty");
             }
-
-            FirstName = firstName;
-        }
-
-        public void SetLastName(string lastName)
-        {
-            if (string.IsNullOrWhiteSpace(lastName))
-            {
-                throw new AccException("customer_last_name", "Customer last name can not be null or empty");
-            }
-
-            LastName = lastName;
         }
 
         public void SetAddress(string Line1, string Line2, string city, string state, string country, string postCode)
         {
+            // TODO: validate address
+
             Address.Line1 = Line1;
             Address.Line2 = Line2;
             Address.City = city;

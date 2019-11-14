@@ -13,5 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\common\ACC.Common.csproj" />
+    <ProjectReference Include="..\..\messaging\rabbitMq\ACC.Messaging.RabbitMq.csproj" />
+    <ProjectReference Include="..\..\persistence\mongo\ACC.Persistence.Mongo.csproj" />
   </ItemGroup>
 </Project>
