@@ -48,7 +48,9 @@ namespace ACC.Services.Tracking
             services.AddScoped<IVehicleQueries, VehicleQueries>();
 
             services.AddTransient(typeof(IEventHandler<VehicleStatusReportedEvent>), typeof(VehicleStatusReportedHandler));
+            services.AddTransient(typeof(IEventHandler<VehicleDeletedEvent>), typeof(VehicleDeletedHandler));
             services.AddTransient(typeof(ICommandHandler<TrackVehicleCommand>), typeof(TrackVehicleHandler));
+            services.AddTransient(typeof(ICommandHandler<StopVehicleTrackingCommand>), typeof(StopVehicleTrackingHandler));
 
             services.AddRabbitMq(Configuration, "rabbitmq");
             services.AddMongoDB(Configuration, "mongo");
@@ -77,7 +79,8 @@ namespace ACC.Services.Tracking
             app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
 
             app.UseRabbitMq()
-                .SubscribeEvent<VehicleStatusReportedEvent>("connectivity");
+                .SubscribeEvent<VehicleStatusReportedEvent>("connectivity")
+                .SubscribeEvent<VehicleDeletedEvent>("vehicles");
         }
     }
 }

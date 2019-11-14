@@ -4,7 +4,6 @@ using ACC.Messaging.RabbitMq;
 using ACC.Persistence.Mongo;
 using ACC.Services.Vehicles.Commands;
 using ACC.Services.Vehicles.Domain;
-using ACC.Services.Vehicles.Events;
 using ACC.Services.Vehicles.Handlers;
 using ACC.Services.Vehicles.Queries;
 using ACC.Services.Vehicles.Repositories;

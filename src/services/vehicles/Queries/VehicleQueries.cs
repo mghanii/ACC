@@ -1,11 +1,11 @@
-﻿using ACC.Services.Vehicles.Dto;
+﻿using ACC.Common.Extensions;
+using ACC.Services.Vehicles.Dto;
 using ACC.Services.Vehicles.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ACC.Common.Extensions;
 
 namespace ACC.Services.Vehicles.Queries
 {

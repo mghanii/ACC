@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ACC.Services.Tracking.Handlers
 {
-    public class VehicleTrackingEndedHandler : StopVehicleTrackingHandlerBase, IEventHandler<VehicleDeletedEvent>
+    public class VehicleDeletedHandler : StopVehicleTrackingHandlerBase, IEventHandler<VehicleDeletedEvent>
 
     {
-        public VehicleTrackingEndedHandler(ITrackedVehicleRepository trackedVehicleRepository,
+        public VehicleDeletedHandler(ITrackedVehicleRepository trackedVehicleRepository,
             IEventBus eventBus,
-            ILogger<VehicleTrackingEndedHandler> logger)
+            ILogger<VehicleDeletedHandler> logger)
             : base(trackedVehicleRepository, eventBus, logger)
         {
         }

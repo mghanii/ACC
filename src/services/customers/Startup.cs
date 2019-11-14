@@ -1,12 +1,12 @@
+using ACC.Messaging.RabbitMq;
+using ACC.Persistence.Mongo;
+using ACC.Services.Customers.Domain;
 using ACC.Services.Customers.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ACC.Persistence.Mongo;
-using ACC.Messaging.RabbitMq;
-using ACC.Services.Customers.Domain;
 
 namespace ACC.Services.Customers
 {

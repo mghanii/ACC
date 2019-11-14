@@ -1,13 +1,11 @@
-﻿using ACC.Common.Messaging;
+﻿using ACC.Common.Exceptions;
+using ACC.Common.Extensions;
+using ACC.Common.Messaging;
 using ACC.Services.Vehicles.Commands;
+using ACC.Services.Vehicles.Events;
 using ACC.Services.Vehicles.Repositories;
-using ACC.Services.Vehicles.Services;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using ACC.Common.Extensions;
-using ACC.Common.Exceptions;
-using ACC.Services.Vehicles.Domain;
-using ACC.Services.Vehicles.Events;
 
 namespace ACC.Services.Vehicles.Handlers
 {

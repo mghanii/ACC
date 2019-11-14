@@ -1,10 +1,10 @@
-﻿using ACC.Services.Customers.Repositories;
+﻿using ACC.Common.Extensions;
+using ACC.Services.Customers.Dto;
+using ACC.Services.Customers.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using ACC.Common.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
-using ACC.Services.Customers.Dto;
+using System.Threading.Tasks;
 
 namespace ACC.Services.Customers.Controllers
 {
