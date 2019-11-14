@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A870DE37
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Vehicles.UnitTests", "tests\ACC.Services.Vehicles.UnitTests\ACC.Services.Vehicles.UnitTests.csproj", "{9FB6F5BE-0187-4438-994E-A6BF5427A260}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Tracking", "src\Services\tracking\ACC.Services.Tracking.csproj", "{8846AE55-71C1-4D17-B88B-993CBDD5CAB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Tracking", "src\services\tracking\ACC.Services.Tracking.csproj", "{8846AE55-71C1-4D17-B88B-993CBDD5CAB1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Customers.UnitTests", "tests\ACC.Services.Customers.UnitTests\ACC.Services.Customers.UnitTests.csproj", "{AC3A10E6-B846-44C1-BA6A-FA18AC8B987C}"
 EndProject
