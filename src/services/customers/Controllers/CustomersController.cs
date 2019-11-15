@@ -1,9 +1,12 @@
 ﻿using ACC.Common.Extensions;
+using ACC.Services.Customers.Domain;
 using ACC.Services.Customers.Dto;
 using ACC.Services.Customers.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace ACC.Services.Customers.Controllers
@@ -22,7 +25,9 @@ namespace ACC.Services.Customers.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(string id)
         {
             var customer = await _customerRepository.GetAsync(id)
                 .AnyContext();
@@ -44,12 +49,34 @@ namespace ACC.Services.Customers.Controllers
             var dto = new CustomerDto
             {
                 Id = customer.Id,
-                Name = customer.Name,
+                FullName = customer.FullName,
                 Email = customer.Email,
                 Address = address
             };
 
             return Ok(dto);
+        }
+
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Create([FromBody]AddCustomerDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            dto.Id = Guid.NewGuid().ToString();
+
+            var customer = new Customer(dto.Id, dto.Email, dto.FullName);
+            customer.SetAddress(dto.AddressLine1, dto.AddressLine2, dto.City, dto.State, dto.Country, dto.PostCode);
+
+            await _customerRepository.AddAsync(customer)
+                .AnyContext();
+
+            return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
         }
     }
 }

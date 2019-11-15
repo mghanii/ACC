@@ -1,4 +1,5 @@
 using ACC.Common.Messaging;
+using ACC.Common.Ping;
 using ACC.Common.Repository;
 using ACC.Messaging.RabbitMq;
 using ACC.Persistence.Mongo;
@@ -6,8 +7,10 @@ using ACC.Services.Tracking.Commands;
 using ACC.Services.Tracking.Domain;
 using ACC.Services.Tracking.Events;
 using ACC.Services.Tracking.Handlers;
+using ACC.Services.Tracking.Options;
 using ACC.Services.Tracking.Queries;
 using ACC.Services.Tracking.Repositories;
+using ACC.Services.Tracking.Scheduling;
 using ACC.Services.Tracking.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,19 +46,25 @@ namespace ACC.Services.Tracking
                 client.BaseAddress = new Uri(Configuration["vehicles-service-url"]);
             });
 
+            services.Configure<TrackingOptions>(Configuration.GetSection("trackingSettings"));
+
+            services.AddRabbitMq(Configuration, "rabbitmq");
+            services.AddMongoDB(Configuration, "mongo");
+
+            services.AddMongoRepository<TrackedVehicle>("vehicles");
+            services.AddMongoRepository<TrackingHistory>("history");
+
+            services.AddSingleton<IPingSender>(new PingSenderSimulator());
+
             services.AddScoped<ITrackedVehicleRepository, TrackedVehicleRepository>();
             services.AddScoped<ITrackingHistoryRepository, TrackingHistoryRepository>();
             services.AddScoped<IVehicleQueries, VehicleQueries>();
 
-            services.AddTransient(typeof(IEventHandler<VehicleStatusReportedEvent>), typeof(VehicleStatusReportedHandler));
             services.AddTransient(typeof(IEventHandler<VehicleDeletedEvent>), typeof(VehicleDeletedHandler));
             services.AddTransient(typeof(ICommandHandler<TrackVehicleCommand>), typeof(TrackVehicleHandler));
             services.AddTransient(typeof(ICommandHandler<StopVehicleTrackingCommand>), typeof(StopVehicleTrackingHandler));
 
-            services.AddRabbitMq(Configuration, "rabbitmq");
-            services.AddMongoDB(Configuration, "mongo");
-            services.AddMongoRepository<TrackedVehicle>("vehicles");
-            services.AddMongoRepository<TrackingHistory>("history");
+            services.AddHostedService<VehiclesTrackingService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -79,7 +88,8 @@ namespace ACC.Services.Tracking
             app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
 
             app.UseRabbitMq()
-                .SubscribeEvent<VehicleStatusReportedEvent>("connectivity")
+                .SubscribeCommand<TrackVehicleCommand>("")
+                .SubscribeCommand<StopVehicleTrackingCommand>("")
                 .SubscribeEvent<VehicleDeletedEvent>("vehicles");
         }
     }

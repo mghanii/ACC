@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Persistence.Mongo", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Messaging.RabbitMq", "src\messaging\rabbitMq\ACC.Messaging.RabbitMq.csproj", "{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.VehicleConnectivity", "src\services\connectivity\ACC.Services.VehicleConnectivity.csproj", "{538A4D27-F772-475C-A604-2C87217F5F96}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A870DE37-3552-4DE5-B5F2-516D8B4B6880}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Vehicles.UnitTests", "tests\ACC.Services.Vehicles.UnitTests\ACC.Services.Vehicles.UnitTests.csproj", "{9FB6F5BE-0187-4438-994E-A6BF5427A260}"
@@ -25,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Tracking", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Customers.UnitTests", "tests\ACC.Services.Customers.UnitTests\ACC.Services.Customers.UnitTests.csproj", "{AC3A10E6-B846-44C1-BA6A-FA18AC8B987C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.Services.Tracking.UnitTests", "tests\ACC.Services.Tracking.UnitTests\ACC.Services.Tracking.UnitTests.csproj", "{C61350E7-188A-4A70-9804-29118DB7D74E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Tracking.UnitTests", "tests\ACC.Services.Tracking.UnitTests\ACC.Services.Tracking.UnitTests.csproj", "{C61350E7-188A-4A70-9804-29118DB7D74E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +55,6 @@ Global
 		{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5982EFE-BD31-47F9-AAC6-03F98DD7A367}.Release|Any CPU.Build.0 = Release|Any CPU
-		{538A4D27-F772-475C-A604-2C87217F5F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{538A4D27-F772-475C-A604-2C87217F5F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{538A4D27-F772-475C-A604-2C87217F5F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{538A4D27-F772-475C-A604-2C87217F5F96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FB6F5BE-0187-4438-994E-A6BF5427A260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FB6F5BE-0187-4438-994E-A6BF5427A260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FB6F5BE-0187-4438-994E-A6BF5427A260}.Release|Any CPU.ActiveCfg = Release|Any CPU

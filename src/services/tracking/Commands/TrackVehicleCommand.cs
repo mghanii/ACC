@@ -7,10 +7,13 @@ namespace ACC.Services.Tracking.Commands
     {
         public string VehicleId { get; }
 
+        public string IPAddress { get; }
+
         [JsonConstructor]
-        public TrackVehicleCommand(string vehicleId)
+        public TrackVehicleCommand(string vehicleId, string ipAddress)
         {
             VehicleId = vehicleId;
+            IPAddress = ipAddress;
         }
     }
 }

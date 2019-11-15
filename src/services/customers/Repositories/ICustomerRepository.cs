@@ -6,5 +6,7 @@ namespace ACC.Services.Customers.Repositories
     public interface ICustomerRepository
     {
         Task<Customer> GetAsync(string id);
+
+        Task AddAsync(Customer customer);
     }
 }

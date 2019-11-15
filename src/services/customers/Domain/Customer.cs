@@ -6,7 +6,7 @@ namespace ACC.Services.Customers.Domain
     public class Customer : EntityBase, IIdentifiable
     {
         public string Email { get; private set; }
-        public string Name { get; private set; }
+        public string FullName { get; private set; }
         public Address Address { get; private set; } = new Address();
 
         public Customer(string id, string email, string name)
