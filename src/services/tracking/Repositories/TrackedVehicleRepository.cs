@@ -17,9 +17,9 @@ namespace ACC.Services.Tracking.Repositories
             _repository = repository;
         }
 
-        public async Task<TrackedVehicle> GetAsync(string id)
+        public async Task<TrackedVehicle> GetAsync(string vehicleId)
         {
-            return await _repository.GetAsync(id)
+            return await _repository.GetAsync(vehicleId)
                 .AnyContext();
         }
 
@@ -29,22 +29,28 @@ namespace ACC.Services.Tracking.Repositories
                      .AnyContext();
         }
 
-        public async Task AddAsync(TrackedVehicle vehicle)
+        public async Task AddAsync(TrackedVehicle trackedVehicle)
         {
-            await _repository.AddAsync(vehicle)
+            await _repository.AddAsync(trackedVehicle)
                       .AnyContext();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(string vehicleId)
         {
-            await _repository.DeleteAsync(id)
+            await _repository.DeleteAsync(vehicleId)
                             .AnyContext();
         }
 
-        public async Task UpdateAsync(TrackedVehicle vehicle)
+        public async Task UpdateAsync(TrackedVehicle trackedVehicle)
         {
-            await _repository.UpdateAsync(vehicle)
+            await _repository.UpdateAsync(trackedVehicle)
                              .AnyContext();
+        }
+
+        public async Task<bool> ExistsAsync(string vehicleId)
+        {
+            return await _repository.ExistsAsync(t => t.Id == vehicleId)
+                              .AnyContext();
         }
     }
 }

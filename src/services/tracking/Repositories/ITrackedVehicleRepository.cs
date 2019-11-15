@@ -8,14 +8,16 @@ namespace ACC.Services.Tracking.Repositories
 {
     public interface ITrackedVehicleRepository
     {
-        Task<TrackedVehicle> GetAsync(string id);
+        Task<TrackedVehicle> GetAsync(string vehicleId);
 
         Task<IEnumerable<TrackedVehicle>> GetAsync(Expression<Func<TrackedVehicle, bool>> predicate);
 
-        Task AddAsync(TrackedVehicle vehicle);
+        Task AddAsync(TrackedVehicle trackedVehicle);
 
-        Task UpdateAsync(TrackedVehicle vehicle);
+        Task UpdateAsync(TrackedVehicle trackedVehicle);
 
-        Task DeleteAsync(string id);
+        Task DeleteAsync(string vehicleId);
+
+        Task<bool> ExistsAsync(string vehicleId);
     }
 }

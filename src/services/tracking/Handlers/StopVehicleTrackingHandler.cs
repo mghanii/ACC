@@ -18,7 +18,7 @@ namespace ACC.Services.Tracking.Handlers
 
         public async Task HandleAsync(StopVehicleTrackingCommand command)
         {
-            await base.StopVehicleTracking(command.VehicleId)
+            await StopVehicleTracking(command.VehicleId)
                  .AnyContext();
         }
     }

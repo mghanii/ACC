@@ -35,37 +35,48 @@ namespace ACC.Services.Tracking.Handlers
 
         public async Task HandleAsync(TrackVehicleCommand command)
         {
-            var trackedVehicle = await _trackedVehicleRepository.GetAsync(command.VehicleId)
+            var alreayTracked = await _trackedVehicleRepository.ExistsAsync(command.VehicleId)
                                   .AnyContext();
 
-            if (trackedVehicle != null)
+            var customerId = "";
+
+            try
             {
-                throw new AccException("vehicle_already_tracked", $"Vehicle: '{command.VehicleId}' already tracked.");
-            }
+                if (alreayTracked)
+                {
+                    throw new AccException("vehicle_already_tracked", $"Vehicle: '{command.VehicleId}' already tracked.");
+                }
 
-            var vehicle = await _vehicleService.GetAsync(command.VehicleId)
-                                .AnyContext();
+                var vehicle = await _vehicleService.GetAsync(command.VehicleId)
+                                    .AnyContext();
 
-            if (vehicle == null)
-            {
-                throw new AccException("vehicle_not_found", $"Vehicle: '{command.VehicleId}' was not found");
-            }
+                if (vehicle == null)
+                {
+                    throw new AccException("vehicle_not_found", $"Vehicle: '{command.VehicleId}' was not found");
+                }
+                customerId = vehicle.CustomerId;
 
-            var customer = await _customerService.GetAsync(vehicle.CustomerId)
+                var customer = await _customerService.GetAsync(vehicle.CustomerId)
+                        .AnyContext();
+
+                if (customer == null)
+                {
+                    throw new AccException("customer_not_found", $"Customer: '{vehicle.CustomerId}' was not found");
+                }
+
+                var trackedVehicle = new TrackedVehicle(vehicle.Id, command.IPAddress, vehicle.RegNr, customer.Id.ToLower(), customer.Name, customer.Address);
+
+                await _trackedVehicleRepository.AddAsync(trackedVehicle)
+                      .AnyContext();
+
+                await _eventBus.PublishAsync(new VehicleTrackedEvent(vehicle.Id))
                     .AnyContext();
-
-            if (customer == null)
-            {
-                throw new AccException("customer_not_found", $"Customer: '{vehicle.CustomerId}' was not found");
             }
-
-            trackedVehicle = new TrackedVehicle(vehicle.Id, command.IPAddress, vehicle.RegNr, customer.Id.ToLower(), customer.Name, customer.Address);
-
-            await _trackedVehicleRepository.AddAsync(trackedVehicle)
-                  .AnyContext();
-
-            await _eventBus.PublishAsync(new VehicleTrackedEvent(trackedVehicle.Id))
-                .AnyContext();
+            catch (AccException ex)
+            {
+                await _eventBus.PublishAsync(new TrackVehicleRejectedEvent(command.VehicleId, customerId, ex.Code, ex.Message))
+                                 .AnyContext();
+            }
         }
     }
 }

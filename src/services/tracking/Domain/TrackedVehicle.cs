@@ -6,8 +6,10 @@ namespace ACC.Services.Tracking.Domain
     {
         public string IPAddress { get; private set; }
         public string RegNr { get; private set; }
+
         public string Status { get; private set; }
         public string CustomerId { get; private set; }
+
         public string CustomerName { get; private set; }
         public string CustomerAddress { get; private set; }
 
@@ -24,6 +26,7 @@ namespace ACC.Services.Tracking.Domain
             CustomerId = customerId;
             CustomerName = customerName;
             CustomerAddress = customerAddress;
+            Status = TrackedVehicleStatus.Disconnected;
         }
 
         public void SetConnectionStatus(string status)

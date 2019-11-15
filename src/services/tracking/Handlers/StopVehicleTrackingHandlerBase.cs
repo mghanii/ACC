@@ -1,5 +1,4 @@
-﻿using ACC.Common.Exceptions;
-using ACC.Common.Extensions;
+﻿using ACC.Common.Extensions;
 using ACC.Common.Messaging;
 using ACC.Services.Tracking.Events;
 using ACC.Services.Tracking.Repositories;
@@ -23,20 +22,26 @@ namespace ACC.Services.Tracking.Handlers
             _logger = logger;
         }
 
-        public async Task StopVehicleTracking(string vehicleId)
+        public async Task StopVehicleTracking(string vehicleId, bool rejectIfNotFound = true)
         {
-            var trackedVehicle = await _trackedVehicleRepository.GetAsync(vehicleId)
+            var exists = await _trackedVehicleRepository.ExistsAsync(vehicleId)
                                   .AnyContext();
 
-            if (trackedVehicle == null)
+            if (!exists)
             {
-                throw new AccException("tracked_vehicle_not_found", $"Tracked vehicle: '{vehicleId}' was not found");
+                if (rejectIfNotFound)
+                {
+                    var msg = $"Tracked vehicle: '{vehicleId}' was not found";
+                    await _eventBus.PublishAsync(new StopVehicleTrackingRejectedEvent(vehicleId, "tracked_vehicle_not_found", msg))
+                                .AnyContext();
+                }
+                return;
             }
 
-            await _trackedVehicleRepository.DeleteAsync(trackedVehicle.Id)
+            await _trackedVehicleRepository.DeleteAsync(vehicleId)
                   .AnyContext();
 
-            await _eventBus.PublishAsync(new VehicleTrackingEndedEvent(trackedVehicle.Id))
+            await _eventBus.PublishAsync(new VehicleTrackingStoppedEvent(vehicleId))
                 .AnyContext();
         }
     }

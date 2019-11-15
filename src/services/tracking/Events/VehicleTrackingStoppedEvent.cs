@@ -1,12 +1,14 @@
 ﻿using ACC.Common.Messaging;
+using Newtonsoft.Json;
 
 namespace ACC.Services.Tracking.Events
 {
-    public class VehicleTrackingEndedEvent : IEvent
+    public class VehicleTrackingStoppedEvent : IEvent
     {
         public string VehicleId { get; }
 
-        public VehicleTrackingEndedEvent(string vehicleId)
+        [JsonConstructor]
+        public VehicleTrackingStoppedEvent(string vehicleId)
         {
             VehicleId = vehicleId;
         }

@@ -6,10 +6,11 @@
         public string RegNr { get; set; }
         public string CustomerId { get; set; }
 
-        public VehicleDto(string vehicleId, string regnr)
+        public VehicleDto(string vehicleId, string regnr, string customerId)
         {
             Id = vehicleId;
             RegNr = regnr;
+            CustomerId = customerId;
         }
     }
 }
