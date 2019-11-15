@@ -6,7 +6,7 @@ namespace ACC.Services.Tracking.Dto
     {
         public string Id { get; }
         public string RegNr { get; }
-        public TrackedVehicleStatus Status { get; }
+        public string Status { get; }
         public string CustomerId { get; }
         public string CustomerName { get; }
         public string CustomerAddress { get; }
@@ -14,7 +14,7 @@ namespace ACC.Services.Tracking.Dto
         public TrackedVehicleDto(
           string id,
           string regnr,
-          TrackedVehicleStatus status,
+          string status,
           string customerId,
           string customerName,
           string customerAddress)

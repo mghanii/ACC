@@ -56,7 +56,7 @@ namespace ACC.Services.Tracking.Scheduling
             _logger.LogDebug($"Vehicles tracking service is stopping.");
         }
 
-        public async Task CheckVehiclesConnectivityAsync()
+        private async Task CheckVehiclesConnectivityAsync()
         {
             var vehicles = await _trackedVehicleRepository.GetAsync(_ => true)
                 .AnyContext();

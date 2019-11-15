@@ -59,7 +59,7 @@ namespace ACC.Services.Tracking.Handlers
                 throw new AccException("customer_not_found", $"Customer: '{vehicle.CustomerId}' was not found");
             }
 
-            trackedVehicle = new TrackedVehicle(vehicle.Id, command.IPAddress, vehicle.RegNr, customer.Id, customer.Name, customer.Address);
+            trackedVehicle = new TrackedVehicle(vehicle.Id, command.IPAddress, vehicle.RegNr, customer.Id.ToLower(), customer.Name, customer.Address);
 
             await _trackedVehicleRepository.AddAsync(trackedVehicle)
                   .AnyContext();

@@ -5,9 +5,9 @@ namespace ACC.Services.Tracking.Domain
     public class TrackingHistory : EntityBase, IIdentifiable
     {
         public string VehicleId { get; }
-        public TrackedVehicleStatus Status { get; }
+        public string Status { get; }
 
-        public TrackingHistory(string id, string vehicleId, TrackedVehicleStatus status)
+        public TrackingHistory(string id, string vehicleId, string status)
             : base(id)
         {
             VehicleId = vehicleId;

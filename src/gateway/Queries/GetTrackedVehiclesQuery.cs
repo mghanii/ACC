@@ -1,9 +1,8 @@
-﻿using ACC.Common.Types;
-using ACC.Services.Tracking.Domain;
-using ACC.Services.Tracking.Dto;
+﻿using ACC.ApiGateway.Dto;
+using ACC.Common.Types;
 using System.Collections.Generic;
 
-namespace ACC.Services.Tracking.Queries
+namespace ACC.ApiGateway.Queries
 {
     public class GetTrackedVehiclesQuery : IQuery<IEnumerable<TrackedVehicleDto>>
     {

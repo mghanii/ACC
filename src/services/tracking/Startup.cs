@@ -38,12 +38,12 @@ namespace ACC.Services.Tracking
 
             services.AddHttpClient<ICustomerService, CustomerService>(client =>
             {
-                client.BaseAddress = new Uri(Configuration["customers-service-url"]);
+                client.BaseAddress = new Uri(Configuration["customersServiceUrl"]);
             });
 
             services.AddHttpClient<ICustomerService, CustomerService>(client =>
             {
-                client.BaseAddress = new Uri(Configuration["vehicles-service-url"]);
+                client.BaseAddress = new Uri(Configuration["vehiclesServiceUrl"]);
             });
 
             services.Configure<TrackingOptions>(Configuration.GetSection("trackingSettings"));
@@ -88,8 +88,8 @@ namespace ACC.Services.Tracking
             app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
 
             app.UseRabbitMq()
-                .SubscribeCommand<TrackVehicleCommand>("")
-                .SubscribeCommand<StopVehicleTrackingCommand>("")
+                .SubscribeCommand<TrackVehicleCommand>("gateway")
+                .SubscribeCommand<StopVehicleTrackingCommand>("gateway")
                 .SubscribeEvent<VehicleDeletedEvent>("vehicles");
         }
     }

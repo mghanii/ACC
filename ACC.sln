@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Customers.Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC.Services.Tracking.UnitTests", "tests\ACC.Services.Tracking.UnitTests\ACC.Services.Tracking.UnitTests.csproj", "{C61350E7-188A-4A70-9804-29118DB7D74E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC.ApiGateway", "src\gateway\ACC.ApiGateway.csproj", "{97A4DBC6-92C0-490A-AACF-96C6162919F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{C61350E7-188A-4A70-9804-29118DB7D74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C61350E7-188A-4A70-9804-29118DB7D74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C61350E7-188A-4A70-9804-29118DB7D74E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97A4DBC6-92C0-490A-AACF-96C6162919F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A4DBC6-92C0-490A-AACF-96C6162919F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A4DBC6-92C0-490A-AACF-96C6162919F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A4DBC6-92C0-490A-AACF-96C6162919F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

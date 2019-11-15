@@ -1,7 +1,6 @@
 ﻿using ACC.Common.Messaging;
-using ACC.Services.Tracking.Domain;
 
-namespace ACC.Services.Tracking.Events
+namespace ACC.ApiGateway.Events
 {
     public class VehicleStatusChangedEvent : IEvent
     {

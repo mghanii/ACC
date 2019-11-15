@@ -1,5 +1,4 @@
 ﻿using ACC.Common.Extensions;
-using ACC.Services.Tracking.Domain;
 using ACC.Services.Tracking.Dto;
 using ACC.Services.Tracking.Repositories;
 using Microsoft.Extensions.Logging;
@@ -23,34 +22,12 @@ namespace ACC.Services.Tracking.Queries
 
         public async Task<IEnumerable<TrackedVehicleDto>> GetAsync(GetTrackedVehiclesQuery query)
         {
-            // var vehicles = await _trackedVehicleRepository.GetAsync(e => (query.Status == null || e.Status == query.Status)
-            //                        && (string.IsNullOrEmpty(query.CustomerId) || e.CustomerId.Equals(query.CustomerId, StringComparison.OrdinalIgnoreCase)));
+            var status = query?.Status?.ToLower();
+            var customerId = query?.CustomerId?.ToLower();
 
-            var vehicles = Enumerable.Empty<TrackedVehicle>();
-
-            if (query == null)
-            {
-                vehicles = await _trackedVehicleRepository.GetAsync(_ => true)
-                                       .AnyContext();
-            }
-            else if (query.Status != null && !string.IsNullOrEmpty(query.CustomerId))
-            {
-                vehicles = await _trackedVehicleRepository.GetAsync(t =>
-                                t.CustomerId.Equals(query.CustomerId, StringComparison.OrdinalIgnoreCase)
-                                && t.Status == query.Status)
-                              .AnyContext();
-            }
-            else if (!string.IsNullOrEmpty(query.CustomerId))
-            {
-                vehicles = await _trackedVehicleRepository.GetAsync(t =>
-                                t.CustomerId.Equals(query.CustomerId, StringComparison.OrdinalIgnoreCase))
-                                   .AnyContext();
-            }
-            else
-            {
-                vehicles = await _trackedVehicleRepository.GetAsync(t => t.Status == query.Status)
-                              .AnyContext();
-            }
+            var vehicles = await _trackedVehicleRepository.GetAsync(e => (string.IsNullOrWhiteSpace(status) || e.Status == status)
+                                                                      && (string.IsNullOrWhiteSpace(customerId) || e.CustomerId == customerId))
+                                                           .AnyContext();
 
             return vehicles.Select(v =>
             {

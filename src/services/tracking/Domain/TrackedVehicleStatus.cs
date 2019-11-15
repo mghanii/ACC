@@ -1,8 +1,8 @@
 ﻿namespace ACC.Services.Tracking.Domain
 {
-    public enum TrackedVehicleStatus
+    public class TrackedVehicleStatus
     {
-        Disconnected,
-        Connected
+        public static string Connected = "connected";
+        public static string Disconnected = "disconnected";
     }
 }

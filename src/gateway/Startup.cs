@@ -1,13 +1,6 @@
-using ACC.Common.Messaging;
-using ACC.Common.Repository;
+using ACC.ApiGateway.Events;
+using ACC.ApiGateway.Services;
 using ACC.Messaging.RabbitMq;
-using ACC.Persistence.Mongo;
-using ACC.Services.Vehicles.Commands;
-using ACC.Services.Vehicles.Domain;
-using ACC.Services.Vehicles.Handlers;
-using ACC.Services.Vehicles.Queries;
-using ACC.Services.Vehicles.Repositories;
-using ACC.Services.Vehicles.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace ACC.Services.Vehicles
+namespace ACC.ApiGateway
 {
     public class Startup
     {
@@ -26,27 +19,22 @@ namespace ACC.Services.Vehicles
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             services.AddMvc();
             services.AddLogging();
 
-            services.AddHttpClient<ICustomerService, CustomerService>(client =>
+            services.AddHttpClient<ITrackingService, TrackingService>(client =>
             {
-                client.BaseAddress = new Uri(Configuration["customerServiceUrl"]);
+                client.BaseAddress = new Uri(Configuration["trackingServiceUrl"]);
             });
 
-            services.AddScoped<IVehicleRepository, VehicleRepository>();
-            services.AddScoped<IVehicleQueries, VehicleQueries>();
-
-            services.AddTransient(typeof(ICommandHandler<AddVehicleCommand>), typeof(AddVehicleHandler));
-
             services.AddRabbitMq(Configuration, "rabbitmq");
-            services.AddMongoDB(Configuration, "mongo");
-            services.AddMongoRepository<Vehicle>("vehicles");
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -65,9 +53,8 @@ namespace ACC.Services.Vehicles
                 endpoints.MapControllers();
             });
 
-            app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
-
-            app.UseRabbitMq();
+            app.UseRabbitMq()
+                .SubscribeEvent<VehicleStatusChangedEvent>("tracking");
         }
     }
 }

@@ -23,9 +23,9 @@ namespace ACC.Services.Tracking.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<TrackedVehicleDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<TrackedVehicleDto>> Get(GetTrackedVehiclesQuery query)
+        public async Task<ActionResult<TrackedVehicleDto>> Get([FromQuery]GetTrackedVehiclesQuery query)
         {
             var results = await _queries.GetAsync(query)
                 .AnyContext();
