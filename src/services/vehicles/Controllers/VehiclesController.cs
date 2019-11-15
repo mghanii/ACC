@@ -1,5 +1,7 @@
 ﻿using ACC.Common.Extensions;
+using ACC.Services.Vehicles.Dto;
 using ACC.Services.Vehicles.Queries;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -21,10 +23,18 @@ namespace ACC.Services.Vehicles.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(VehicleDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(string id)
         {
             var dto = await _vehicleQueries.GetAsync(id)
                 .AnyContext();
+
+            if (dto == null)
+            {
+                _logger.LogInformation($"Vehicle '{id}' was not found");
+                return NotFound();
+            }
 
             return Ok(dto);
         }

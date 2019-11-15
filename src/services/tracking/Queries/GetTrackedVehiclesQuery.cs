@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace ACC.Services.Tracking.Queries
 {
-    public class GetVehiclesQuery : IQuery<IEnumerable<TrackedVehicleDto>>
+    public class GetTrackedVehiclesQuery : IQuery<IEnumerable<TrackedVehicleDto>>
     {
-        public string Customer { get; set; }
+        public string CustomerId { get; set; }
         public TrackedVehicleStatus? Status { get; set; }
     }
 }

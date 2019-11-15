@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace ACC.Services.Tracking.Queries
 {
-    public interface IVehicleQueries
+    public interface ITrackedVehiclesQueries
     {
-        Task<IEnumerable<TrackedVehicleDto>> GetVehiclesAsync(GetVehiclesQuery query);
+        Task<IEnumerable<TrackedVehicleDto>> GetAsync(GetTrackedVehiclesQuery query);
     }
 }

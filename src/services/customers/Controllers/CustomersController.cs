@@ -25,9 +25,9 @@ namespace ACC.Services.Customers.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(string id)
+        [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CustomerDto>> GetById(string id)
         {
             var customer = await _customerRepository.GetAsync(id)
                 .AnyContext();
@@ -59,9 +59,9 @@ namespace ACC.Services.Customers.Controllers
 
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody]AddCustomerDto dto)
+        [ProducesResponseType(typeof(AddCustomerDto), StatusCodes.Status201Created)]
+        public async Task<ActionResult<AddCustomerDto>> Create([FromBody]AddCustomerDto dto)
         {
             if (!ModelState.IsValid)
             {
