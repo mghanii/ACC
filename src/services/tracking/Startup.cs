@@ -58,7 +58,7 @@ namespace ACC.Services.Tracking
 
             services.AddScoped<ITrackedVehicleRepository, TrackedVehicleRepository>();
             services.AddScoped<ITrackingHistoryRepository, TrackingHistoryRepository>();
-            services.AddScoped<IVehicleQueries, VehicleQueries>();
+            services.AddScoped<ITrackedVehiclesQueries, TrackedVehiclesQueries>();
 
             services.AddTransient(typeof(IEventHandler<VehicleDeletedEvent>), typeof(VehicleDeletedHandler));
             services.AddTransient(typeof(ICommandHandler<TrackVehicleCommand>), typeof(TrackVehicleHandler));
