@@ -20,7 +20,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
         private string _vehicleId;
         private VehicleDeletedEvent _event;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _trackedVehicleRepository = Substitute.For<ITrackedVehicleRepository>();

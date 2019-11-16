@@ -21,7 +21,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
         private string _vehicleId;
         private StopVehicleTrackingCommand _command;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _trackedVehicleRepository = Substitute.For<ITrackedVehicleRepository>();

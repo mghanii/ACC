@@ -1,12 +1,12 @@
-﻿using ACC.Services.Tracking.Dto;
+﻿using ACC.Common.Extensions;
+using ACC.Services.Tracking.Dto;
 using ACC.Services.Tracking.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Threading.Tasks;
-using ACC.Common.Extensions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ACC.Services.Tracking.Controllers
 {
@@ -15,7 +15,7 @@ namespace ACC.Services.Tracking.Controllers
     public class TrackedVehiclesController : ControllerBase
     {
         private readonly ITrackedVehiclesQueries _queries;
-        private readonly ILogger _logger;
+        private readonly ILogger<TrackedVehiclesController> _logger;
 
         public TrackedVehiclesController(ITrackedVehiclesQueries queries, ILogger<TrackedVehiclesController> logger)
         {
@@ -25,7 +25,7 @@ namespace ACC.Services.Tracking.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<TrackedVehicleDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<TrackedVehicleDto>> Get([FromQuery]GetTrackedVehiclesQuery query)
+        public async Task<ActionResult<IEnumerable<TrackedVehicleDto>>> Get([FromQuery]GetTrackedVehiclesQuery query)
         {
             var results = await _queries.GetAsync(query)
                 .AnyContext();

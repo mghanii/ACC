@@ -12,7 +12,7 @@ namespace ACC.Services.Tracking.Queries
     public class TrackedVehiclesQueries : ITrackedVehiclesQueries
     {
         private readonly ITrackedVehicleRepository _trackedVehicleRepository;
-        private readonly ILogger _logger;
+        private readonly ILogger<TrackedVehiclesQueries> _logger;
 
         public TrackedVehiclesQueries(ITrackedVehicleRepository vehicleRepository, ILogger<TrackedVehiclesQueries> logger)
         {

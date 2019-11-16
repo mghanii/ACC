@@ -1,8 +1,9 @@
 ﻿using ACC.Common.Types;
+using System;
 
 namespace ACC.Services.Tracking.Domain
 {
-    public class TrackedVehicle : EntityBase, IIdentifiable
+    public class TrackedVehicle : EntityBase, IIdentifiable, IEquatable<TrackedVehicle>
     {
         public string IPAddress { get; private set; }
         public string RegNr { get; private set; }
@@ -33,6 +34,37 @@ namespace ACC.Services.Tracking.Domain
         {
             Status = status;
             SetUpdateDate();
+        }
+
+        public bool Equals(TrackedVehicle other)
+        {
+            if (other is null)
+                return false;
+
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TrackedVehicle);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public static bool operator ==(TrackedVehicle left, TrackedVehicle right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(TrackedVehicle left, TrackedVehicle right)
+        {
+            return !Equals(left, right);
         }
     }
 }

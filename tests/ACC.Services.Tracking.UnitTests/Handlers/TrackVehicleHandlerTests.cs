@@ -26,7 +26,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
         private string _ipAddress;
         private TrackVehicleCommand _command;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _trackedVehicleRepository = Substitute.For<ITrackedVehicleRepository>();

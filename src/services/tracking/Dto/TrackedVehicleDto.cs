@@ -1,8 +1,9 @@
 ﻿using ACC.Services.Tracking.Domain;
+using System;
 
 namespace ACC.Services.Tracking.Dto
 {
-    public class TrackedVehicleDto
+    public class TrackedVehicleDto : IEquatable<TrackedVehicleDto>
     {
         public string Id { get; }
         public string RegNr { get; }
@@ -25,6 +26,37 @@ namespace ACC.Services.Tracking.Dto
             CustomerId = customerId;
             CustomerName = customerName;
             CustomerAddress = customerAddress;
+        }
+
+        public bool Equals(TrackedVehicleDto other)
+        {
+            if (other is null)
+                return false;
+
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TrackedVehicleDto);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public static bool operator ==(TrackedVehicleDto left, TrackedVehicleDto right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(TrackedVehicleDto left, TrackedVehicleDto right)
+        {
+            return !Equals(left, right);
         }
     }
 }
