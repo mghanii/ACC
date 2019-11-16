@@ -168,6 +168,6 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
         }
 
         private CustomerDto GetTestCustomer()
-            => new CustomerDto { Id = Guid.NewGuid().ToString(), Name = "Mohamed", Email = "Mohamed@test.test", Address = "Cairo, Egypt" };
+            => new CustomerDto { Id = Guid.NewGuid().ToString(), Name = "Test Customer", Address = "Cairo, Egypt" };
     }
 }

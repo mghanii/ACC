@@ -6,12 +6,9 @@ namespace ACC.Services.Customers.Dto
     {
         public string Id { get; set; }
 
-        [EmailAddress]
-        public string Email { get; set; }
-
         [Required]
         [MinLength(3)]
-        public string FullName { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public string AddressLine1 { get; set; }

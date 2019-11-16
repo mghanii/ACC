@@ -49,8 +49,7 @@ namespace ACC.Services.Customers.Controllers
             var dto = new CustomerDto
             {
                 Id = customer.Id,
-                FullName = customer.FullName,
-                Email = customer.Email,
+                Name = customer.Name,
                 Address = address
             };
 
@@ -70,7 +69,7 @@ namespace ACC.Services.Customers.Controllers
 
             dto.Id = Guid.NewGuid().ToString();
 
-            var customer = new Customer(dto.Id, dto.Email, dto.FullName);
+            var customer = new Customer(dto.Id, dto.Name);
             customer.SetAddress(dto.AddressLine1, dto.AddressLine2, dto.City, dto.State, dto.Country, dto.PostCode);
 
             await _customerRepository.AddAsync(customer)
