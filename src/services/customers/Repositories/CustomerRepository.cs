@@ -2,6 +2,7 @@
 using ACC.Common.Messaging;
 using ACC.Common.Repository;
 using ACC.Services.Customers.Domain;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ACC.Services.Customers.Repositories
@@ -15,6 +16,12 @@ namespace ACC.Services.Customers.Repositories
         {
             _repository = repository;
             _busPublisher = busPublisher;
+        }
+
+        public async Task<IEnumerable<Customer>> GetAllAsync()
+        {
+            return await _repository.GetAsync(_ => true)
+                .AnyContext();
         }
 
         public async Task<Customer> GetAsync(string id)

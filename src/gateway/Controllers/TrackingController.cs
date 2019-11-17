@@ -31,7 +31,7 @@ namespace ACC.ApiGateway.Controllers
 
         [HttpGet("vehicles")]
         [ProducesResponseType(typeof(IEnumerable<TrackedVehicleDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<TrackedVehicleDto>> GetTrackedVehicles(string customerId, string status)
+        public async Task<ActionResult<IEnumerable<TrackedVehicleDto>>> GetTrackedVehicles(string customerId, string status)
         {
             var query = new GetTrackedVehiclesQuery
             {

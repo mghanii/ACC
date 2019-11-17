@@ -59,7 +59,7 @@ namespace ACC.UI.SPA
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-
+                var envi = env.IsDevelopment();
                 // if (env.IsDevelopment())
                 //{
                 spa.UseReactDevelopmentServer(npmScript: "start");

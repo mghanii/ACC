@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -22,6 +24,23 @@ namespace ACC.Services.Customers.Controllers
         {
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        [HttpGet("")]
+        [ProducesResponseType(typeof(IEnumerable<CustomerDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> Get()
+        {
+            var customers = await _customerRepository.GetAllAsync()
+                .AnyContext();
+
+            var dtos = customers.Select(c => new CustomerDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Address = $"{c.Address.Line1}, {c.Address.PostCode} {c.Address.City} {c.Address.Country}"
+            });
+
+            return Ok(dtos);
         }
 
         [HttpGet("{id}")]

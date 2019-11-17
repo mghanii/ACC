@@ -27,13 +27,12 @@ namespace ACC.Services.Customers
             services.AddMvc();
             services.AddLogging();
 
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-
             services.AddRabbitMq(Configuration, "rabbitmq");
 
             services.AddMongoDB(Configuration, "mongo");
             services.AddScoped<IMongoDbSeeder, CustomMongoDbSeeder>();
             services.AddMongoRepository<Customer>("customers");
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

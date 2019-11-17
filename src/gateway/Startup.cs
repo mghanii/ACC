@@ -33,6 +33,11 @@ namespace ACC.ApiGateway
                 client.BaseAddress = new Uri(Configuration["trackingServiceUrl"]);
             });
 
+            services.AddHttpClient<ICustomerService, CustomerService>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration["customersServiceUrl"]);
+            });
+
             services.AddScoped<IEventHandler<VehicleStatusChangedEvent>, VehicleStatusChangedHandler>();
             services.AddRabbitMq(Configuration, "rabbitmq");
         }
