@@ -4,6 +4,8 @@ services:
 
   acc.services.customers:
     image: ${DOCKER_REGISTRY-}acc.services.customers
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
     build:
       context: .
       dockerfile: src/services/customers/Dockerfile
@@ -12,10 +14,13 @@ services:
     - mongo
     restart: always
     ports:
-      - '55101:80'
+      - '5000:80'
+      #- '44338:443'
 
   acc.services.vehicles:
     image: ${DOCKER_REGISTRY-}acc.services.vehicles
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
     build:
       context: .
       dockerfile: src/services/vehicles/Dockerfile
@@ -25,10 +30,13 @@ services:
     - acc.services.customers
     restart: always
     ports:
-      - '55103:80'
+      - '5002:80'
+      #- '44353:443'
 
   acc.services.tracking:
     image: ${DOCKER_REGISTRY-}acc.services.tracking
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
     build:
       context: .
       dockerfile: src/services/tracking/Dockerfile
@@ -39,10 +47,13 @@ services:
     - acc.services.customers
     restart: always
     ports:
-      - '55102:80'
+      - '5004:80'
+      #- '44340:443'
 
   acc.gateway.api:
     image: ${DOCKER_REGISTRY-}acc.gateway.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
     build:
       context: .
       dockerfile: src/gateway/Dockerfile
@@ -53,7 +64,8 @@ services:
     - acc.services.vehicles
     restart: always
     ports:
-      - '55100:80'
+      - '5006:80'
+      #- '44364:443'
       
   acc.ui.spa:
     image: ${DOCKER_REGISTRY-}acc.ui.spa
@@ -63,8 +75,11 @@ services:
     volumes:
       - '.:/app'
       - '/app/node_modules'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
     ports:
-      - '55104:80'
+      - '5008:80'
+      #- '44351:443'
 
   mongo:
     image: mongo:4

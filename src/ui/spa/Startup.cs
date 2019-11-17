@@ -20,7 +20,6 @@ namespace ACC.UI.SPA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
@@ -44,7 +43,7 @@ namespace ACC.UI.SPA
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -61,10 +60,10 @@ namespace ACC.UI.SPA
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
+                // if (env.IsDevelopment())
+                //{
+                spa.UseReactDevelopmentServer(npmScript: "start");
+                //}
             });
         }
     }

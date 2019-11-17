@@ -20,5 +20,5 @@ RUN dotnet publish "ACC.Services.Tracking.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV ASPNETCORE_ENVIRONMENT docker
-ENTRYPOINT ["dotnet", "ACC.Services.Tracking.dll"]
+#ENV ASPNETCORE_ENVIRONMENT Docker
+ENTRYPOINT ["dotnet", "ACC.Services.Tracking.dll","--environment=Docker"]

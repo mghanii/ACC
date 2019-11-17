@@ -52,7 +52,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
                   .Returns(e => _dtos.Where(x => x.Status == ((GetTrackedVehiclesQuery)e[0]).Status));
 
             // Act
-            var actionResult = await _controller.Get(query);
+            var actionResult = await _controller.Get(query.CustomerId, query.Status);
             var okResult = actionResult.Result as OkObjectResult;
 
             // Assert
@@ -76,7 +76,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
                   .Returns(e => _dtos.Where(x => x.CustomerId == ((GetTrackedVehiclesQuery)e[0]).CustomerId));
 
             // Act
-            var actionResult = await _controller.Get(query);
+            var actionResult = await _controller.Get(query.CustomerId, query.Status);
             var okResult = actionResult.Result as OkObjectResult;
 
             // Assert
@@ -103,7 +103,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
                                               && x.Status == ((GetTrackedVehiclesQuery)e[0]).Status));
 
             // Act
-            var actionResult = await _controller.Get(query);
+            var actionResult = await _controller.Get(query.CustomerId, query.Status);
             var okResult = actionResult.Result as OkObjectResult;
 
             // Assert
@@ -124,7 +124,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
                   .Returns(e => _dtos);
 
             // Act
-            var actionResult = await _controller.Get(query);
+            var actionResult = await _controller.Get(query.CustomerId, query.Status);
             var okResult = actionResult.Result as OkObjectResult;
 
             // Assert

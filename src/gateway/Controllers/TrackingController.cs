@@ -29,10 +29,16 @@ namespace ACC.ApiGateway.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("vehicles")]
         [ProducesResponseType(typeof(IEnumerable<TrackedVehicleDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<TrackedVehicleDto>> GetTrackedVehicles([FromQuery]GetTrackedVehiclesQuery query)
+        public async Task<ActionResult<TrackedVehicleDto>> GetTrackedVehicles(string customerId, string status)
         {
+            var query = new GetTrackedVehiclesQuery
+            {
+                CustomerId = customerId,
+                Status = status
+            };
+
             var results = await _trackingService.GetTrackedVehiclesAsync(query)
                 .AnyContext();
 

@@ -1,6 +1,7 @@
 using ACC.Messaging.RabbitMq;
 using ACC.Persistence.Mongo;
 using ACC.Services.Customers.Domain;
+using ACC.Services.Customers.Migrations;
 using ACC.Services.Customers.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace ACC.Services.Customers
             services.AddRabbitMq(Configuration, "rabbitmq");
 
             services.AddMongoDB(Configuration, "mongo");
+            services.AddScoped<IMongoDbSeeder, CustomMongoDbSeeder>();
             services.AddMongoRepository<Customer>("customers");
         }
 
@@ -42,7 +44,7 @@ namespace ACC.Services.Customers
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -5,6 +5,7 @@ using ACC.Persistence.Mongo;
 using ACC.Services.Vehicles.Commands;
 using ACC.Services.Vehicles.Domain;
 using ACC.Services.Vehicles.Handlers;
+using ACC.Services.Vehicles.Migrations;
 using ACC.Services.Vehicles.Queries;
 using ACC.Services.Vehicles.Repositories;
 using ACC.Services.Vehicles.Services;
@@ -44,6 +45,7 @@ namespace ACC.Services.Vehicles
 
             services.AddRabbitMq(Configuration, "rabbitmq");
             services.AddMongoDB(Configuration, "mongo");
+            services.AddScoped<IMongoDbSeeder, CustomMongoDbSeeder>();
             services.AddMongoRepository<Vehicle>("vehicles");
         }
 
@@ -54,7 +56,7 @@ namespace ACC.Services.Vehicles
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -64,8 +66,6 @@ namespace ACC.Services.Vehicles
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-
-            //app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
 
             app.UseRabbitMq();
         }

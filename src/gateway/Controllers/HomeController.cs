@@ -3,7 +3,7 @@
 namespace ACC.ApiGateway.Controllers
 {
     [ApiController]
-    [Route("")]
+    [Route("[controller]")]
     public class HomeController : ControllerBase
     {
         [HttpGet]

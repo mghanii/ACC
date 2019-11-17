@@ -77,7 +77,7 @@ namespace ACC.Services.Tracking
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

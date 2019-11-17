@@ -23,7 +23,7 @@ namespace ACC.ApiGateway.Services
 
         public async Task<IEnumerable<TrackedVehicleDto>> GetTrackedVehiclesAsync(GetTrackedVehiclesQuery query)
         {
-            var path = $"/api/trackedvehicles?CustomerId={query.CustomerId}&Status={query.Status}";
+            var path = $"tracked/vehicles?customerId={query.CustomerId}&status={query.Status}";
 
             var content = await _httpClient.GetStringAsync(path)
                       .AnyContext(); ;

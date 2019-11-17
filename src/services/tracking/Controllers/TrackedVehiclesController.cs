@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ACC.Services.Tracking.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("tracked")]
     public class TrackedVehiclesController : ControllerBase
     {
         private readonly ITrackedVehiclesQueries _queries;
@@ -23,10 +23,16 @@ namespace ACC.Services.Tracking.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet]
+        [HttpGet("vehicles")]
         [ProducesResponseType(typeof(IEnumerable<TrackedVehicleDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<TrackedVehicleDto>>> Get([FromQuery]GetTrackedVehiclesQuery query)
+        public async Task<ActionResult<IEnumerable<TrackedVehicleDto>>> Get(string customerId, string status)
         {
+            var query = new GetTrackedVehiclesQuery
+            {
+                CustomerId = customerId,
+                Status = status
+            };
+
             var results = await _queries.GetAsync(query)
                 .AnyContext();
 
