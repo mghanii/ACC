@@ -6,6 +6,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
 COPY ["src/services/vehicles/ACC.Services.Vehicles.csproj", "src/services/vehicles/"]
+COPY ["src/persistence/mongo/ACC.Persistence.Mongo.csproj", "src/persistence/mongo/"]
+COPY ["src/common/ACC.Common.csproj", "src/common/"]
+COPY ["src/messaging/rabbitMq/ACC.Messaging.RabbitMq.csproj", "src/messaging/rabbitMq/"]
 RUN dotnet restore "src/services/vehicles/ACC.Services.Vehicles.csproj"
 COPY . .
 WORKDIR "/src/src/services/vehicles"

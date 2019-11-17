@@ -13,7 +13,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
     [TestFixture]
     public class VehicleDeletedHandlerTests
     {
-        private IEventBus _eventBus;
+        private IBusPublisher _busPublisher;
         private ILogger<VehicleDeletedHandler> _logger;
         private ITrackedVehicleRepository _trackedVehicleRepository;
         private VehicleDeletedHandler _vehicleDeletedHandler;
@@ -24,9 +24,9 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
         public void Setup()
         {
             _trackedVehicleRepository = Substitute.For<ITrackedVehicleRepository>();
-            _eventBus = Substitute.For<IEventBus>();
+            _busPublisher = Substitute.For<IBusPublisher>();
             _logger = Substitute.For<ILogger<VehicleDeletedHandler>>();
-            _vehicleDeletedHandler = new VehicleDeletedHandler(_trackedVehicleRepository, _eventBus, _logger);
+            _vehicleDeletedHandler = new VehicleDeletedHandler(_trackedVehicleRepository, _busPublisher, _logger);
             _vehicleId = Guid.NewGuid().ToString();
             _event = new VehicleDeletedEvent(_vehicleId);
         }
@@ -60,7 +60,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
             await _vehicleDeletedHandler.HandleAsync(_event);
 
             // Assert
-            await _eventBus
+            await _busPublisher
              .Received()
              .PublishAsync(Arg.Is<VehicleTrackingStoppedEvent>(e => e.VehicleId == _vehicleId));
         }
@@ -77,7 +77,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
             await _vehicleDeletedHandler.HandleAsync(_event);
 
             // Assert
-            await _eventBus
+            await _busPublisher
              .DidNotReceive()
              .PublishAsync(Arg.Any<StopVehicleTrackingRejectedEvent>());
         }

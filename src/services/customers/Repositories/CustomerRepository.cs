@@ -9,9 +9,9 @@ namespace ACC.Services.Customers.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private readonly IRepository<Customer, string> _repository;
-        private readonly IEventBus _eventBus;
+        private readonly IBusSubscriber _eventBus;
 
-        public CustomerRepository(IRepository<Customer, string> repository, IEventBus eventBus)
+        public CustomerRepository(IRepository<Customer, string> repository, IBusSubscriber eventBus)
         {
             _repository = repository;
             _eventBus = eventBus;

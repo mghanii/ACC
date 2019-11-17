@@ -11,9 +11,9 @@ namespace ACC.Services.Tracking.Handlers
 
     {
         public VehicleDeletedHandler(ITrackedVehicleRepository trackedVehicleRepository,
-            IEventBus eventBus,
+            IBusPublisher busPublisher,
             ILogger<VehicleDeletedHandler> logger)
-            : base(trackedVehicleRepository, eventBus, logger)
+            : base(trackedVehicleRepository, busPublisher, logger)
         {
         }
 

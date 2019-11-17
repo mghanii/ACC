@@ -17,15 +17,15 @@ namespace ACC.ApiGateway.Controllers
     public class TrackingController : ControllerBase
     {
         private readonly ITrackingService _trackingService;
-        private readonly IEventBus _eventBus;
+        private readonly IBusPublisher _busPublisher;
         private readonly ILogger<TrackingController> _logger;
 
         public TrackingController(ITrackingService trackingService,
-            IEventBus eventBus,
+            IBusPublisher busPublisher,
             ILogger<TrackingController> logger)
         {
             _trackingService = trackingService;
-            _eventBus = eventBus;
+            _busPublisher = busPublisher;
             _logger = logger;
         }
 
@@ -51,7 +51,7 @@ namespace ACC.ApiGateway.Controllers
                 return BadRequest();
             }
 
-            await _eventBus.PublishAsync(command)
+            await _busPublisher.PublishAsync(command)
                 .AnyContext();
 
             return Accepted();
@@ -67,7 +67,7 @@ namespace ACC.ApiGateway.Controllers
                 return BadRequest();
             }
 
-            await _eventBus.PublishAsync(command)
+            await _busPublisher.PublishAsync(command)
                 .AnyContext();
 
             return Accepted();

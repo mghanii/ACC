@@ -7,6 +7,7 @@ using ACC.Services.Tracking.Commands;
 using ACC.Services.Tracking.Domain;
 using ACC.Services.Tracking.Events;
 using ACC.Services.Tracking.Handlers;
+using ACC.Services.Tracking.Middlewares;
 using ACC.Services.Tracking.Options;
 using ACC.Services.Tracking.Queries;
 using ACC.Services.Tracking.Repositories;
@@ -41,7 +42,7 @@ namespace ACC.Services.Tracking
                 client.BaseAddress = new Uri(Configuration["customersServiceUrl"]);
             });
 
-            services.AddHttpClient<ICustomerService, CustomerService>(client =>
+            services.AddHttpClient<IVehicleService, VehicleService>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["vehiclesServiceUrl"]);
             });
@@ -60,9 +61,9 @@ namespace ACC.Services.Tracking
             services.AddScoped<ITrackingHistoryRepository, TrackingHistoryRepository>();
             services.AddScoped<ITrackedVehiclesQueries, TrackedVehiclesQueries>();
 
-            services.AddTransient(typeof(IEventHandler<VehicleDeletedEvent>), typeof(VehicleDeletedHandler));
-            services.AddTransient(typeof(ICommandHandler<TrackVehicleCommand>), typeof(TrackVehicleHandler));
-            services.AddTransient(typeof(ICommandHandler<StopVehicleTrackingCommand>), typeof(StopVehicleTrackingHandler));
+            services.AddScoped(typeof(IEventHandler<VehicleDeletedEvent>), typeof(VehicleDeletedHandler));
+            services.AddScoped(typeof(ICommandHandler<TrackVehicleCommand>), typeof(TrackVehicleHandler));
+            services.AddScoped(typeof(ICommandHandler<StopVehicleTrackingCommand>), typeof(StopVehicleTrackingHandler));
 
             services.AddHostedService<VehiclesTrackingService>();
         }
@@ -82,10 +83,10 @@ namespace ACC.Services.Tracking
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
+            app.UseDbInitialization();
 
             app.UseRabbitMq()
                 .SubscribeCommand<TrackVehicleCommand>("gateway")

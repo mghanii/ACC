@@ -5,10 +5,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
-COPY ["src/Services/tracking/ACC.Services.Tracking.csproj", "src/Services/tracking/"]
-RUN dotnet restore "src/Services/tracking/ACC.Services.Tracking.csproj"
+COPY ["src/services/tracking/ACC.Services.Tracking.csproj", "src/services/tracking/"]
+COPY ["src/persistence/mongo/ACC.Persistence.Mongo.csproj", "src/persistence/mongo/"]
+COPY ["src/common/ACC.Common.csproj", "src/common/"]
+COPY ["src/messaging/rabbitMq/ACC.Messaging.RabbitMq.csproj", "src/messaging/rabbitMq/"]
+RUN dotnet restore "src/services/tracking/ACC.Services.Tracking.csproj"
 COPY . .
-WORKDIR "/src/src/Services/tracking"
+WORKDIR "/src/src/services/tracking"
 RUN dotnet build "ACC.Services.Tracking.csproj" -c Release -o /app/build
 
 FROM build AS publish

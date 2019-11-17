@@ -40,7 +40,7 @@ namespace ACC.Services.Vehicles
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IVehicleQueries, VehicleQueries>();
 
-            services.AddTransient(typeof(ICommandHandler<AddVehicleCommand>), typeof(AddVehicleHandler));
+            services.AddScoped(typeof(ICommandHandler<AddVehicleCommand>), typeof(AddVehicleHandler));
 
             services.AddRabbitMq(Configuration, "rabbitmq");
             services.AddMongoDB(Configuration, "mongo");
@@ -62,7 +62,7 @@ namespace ACC.Services.Vehicles
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();

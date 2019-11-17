@@ -15,17 +15,17 @@ namespace ACC.Services.Vehicles.Handlers
     {
         private readonly IVehicleRepository _vehicleRepository;
         private readonly ICustomerService _customerService;
-        private readonly IEventBus _eventBus;
+        private readonly IBusPublisher _busPublisher;
         private readonly ILogger _logger;
 
         public AddVehicleHandler(IVehicleRepository vehicleRepository,
             ICustomerService customerService,
-            IEventBus eventBus,
+            IBusPublisher busPublisher,
             ILogger<AddVehicleHandler> logger)
         {
             _vehicleRepository = vehicleRepository;
             _customerService = customerService;
-            _eventBus = eventBus;
+            _busPublisher = busPublisher;
             _logger = logger;
         }
 
@@ -53,7 +53,7 @@ namespace ACC.Services.Vehicles.Handlers
 
             var @event = new VehicleAddedEvent(vehicle.Id, vehicle.RegNr, vehicle.CustomerId);
 
-            await _eventBus.PublishAsync(@event)
+            await _busPublisher.PublishAsync(@event)
                 .AnyContext();
         }
     }

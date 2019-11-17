@@ -10,15 +10,15 @@ namespace ACC.Services.Tracking.Handlers
     public class StopVehicleTrackingHandlerBase
     {
         private readonly ITrackedVehicleRepository _trackedVehicleRepository;
-        private readonly IEventBus _eventBus;
+        private readonly IBusPublisher _busPublisher;
         private readonly ILogger _logger;
 
         public StopVehicleTrackingHandlerBase(ITrackedVehicleRepository trackedVehicleRepository,
-            IEventBus eventBus,
+            IBusPublisher busPublisher,
             ILogger<StopVehicleTrackingHandlerBase> logger)
         {
             _trackedVehicleRepository = trackedVehicleRepository;
-            _eventBus = eventBus;
+            _busPublisher = busPublisher;
             _logger = logger;
         }
 
@@ -32,7 +32,7 @@ namespace ACC.Services.Tracking.Handlers
                 if (rejectIfNotFound)
                 {
                     var msg = $"Tracked vehicle: '{vehicleId}' was not found";
-                    await _eventBus.PublishAsync(new StopVehicleTrackingRejectedEvent(vehicleId, "tracked_vehicle_not_found", msg))
+                    await _busPublisher.PublishAsync(new StopVehicleTrackingRejectedEvent(vehicleId, "tracked_vehicle_not_found", msg))
                                 .AnyContext();
                 }
                 return;
@@ -41,7 +41,7 @@ namespace ACC.Services.Tracking.Handlers
             await _trackedVehicleRepository.DeleteAsync(vehicleId)
                   .AnyContext();
 
-            await _eventBus.PublishAsync(new VehicleTrackingStoppedEvent(vehicleId))
+            await _busPublisher.PublishAsync(new VehicleTrackingStoppedEvent(vehicleId))
                 .AnyContext();
         }
     }

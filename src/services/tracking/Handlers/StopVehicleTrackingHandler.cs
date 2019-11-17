@@ -10,9 +10,9 @@ namespace ACC.Services.Tracking.Handlers
     public class StopVehicleTrackingHandler : StopVehicleTrackingHandlerBase, ICommandHandler<StopVehicleTrackingCommand>
     {
         public StopVehicleTrackingHandler(ITrackedVehicleRepository trackedVehicleRepository,
-            IEventBus eventBus,
+            IBusPublisher busPublisher,
             ILogger<StopVehicleTrackingHandler> logger)
-            : base(trackedVehicleRepository, eventBus, logger)
+            : base(trackedVehicleRepository, busPublisher, logger)
         {
         }
 

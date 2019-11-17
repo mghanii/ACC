@@ -5,6 +5,7 @@ using ACC.Services.Tracking.Domain;
 using ACC.Services.Tracking.Events;
 using ACC.Services.Tracking.Options;
 using ACC.Services.Tracking.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -16,23 +17,20 @@ namespace ACC.Services.Tracking.Scheduling
 {
     public class VehiclesTrackingService : BackgroundService
     {
-        private readonly ITrackedVehicleRepository _trackedVehicleRepository;
-        private readonly ITrackingHistoryRepository _trackingHistoryRepository;
-        private readonly IEventBus _eventBus;
+        private readonly IServiceProvider _services;
         private readonly ILogger<VehiclesTrackingService> _logger;
-        private readonly IPingSender _pingSender;
         private readonly IOptions<TrackingOptions> _options;
+        private readonly IPingSender _pingSender;
+        private ITrackedVehicleRepository _trackedVehicleRepository;
+        private ITrackingHistoryRepository _trackingHistoryRepository;
+        private IBusPublisher _busPublisher;
 
-        public VehiclesTrackingService(ITrackedVehicleRepository trackedVehicleRepository,
-            ITrackingHistoryRepository trackingHistoryRepository,
-            IEventBus eventBus,
+        public VehiclesTrackingService(IServiceProvider services,
             ILogger<VehiclesTrackingService> logger,
             IPingSender pingSender,
             IOptions<TrackingOptions> options)
         {
-            _trackedVehicleRepository = trackedVehicleRepository;
-            _trackingHistoryRepository = trackingHistoryRepository;
-            _eventBus = eventBus;
+            _services = services;
             _logger = logger;
             _pingSender = pingSender;
             _options = options;
@@ -41,16 +39,22 @@ namespace ACC.Services.Tracking.Scheduling
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogDebug($"Vechicles tracking service is starting.");
-
             stoppingToken.Register(() => _logger.LogDebug($"Vehicles tracking service is stopping."));
 
-            while (!stoppingToken.IsCancellationRequested)
+            using (var scope = _services.CreateScope())
             {
-                // fire and forget?
-                await CheckVehiclesConnectivityAsync()
-                     .AnyContext();
+                _trackedVehicleRepository = scope.ServiceProvider.GetRequiredService<ITrackedVehicleRepository>();
+                _trackingHistoryRepository = scope.ServiceProvider.GetRequiredService<ITrackingHistoryRepository>();
+                _busPublisher = scope.ServiceProvider.GetRequiredService<IBusPublisher>();
 
-                await Task.Delay(_options.Value.PingTimeFrame, stoppingToken);
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    // fire and forget?
+                    await CheckVehiclesConnectivityAsync()
+                         .AnyContext();
+
+                    await Task.Delay(_options.Value.PingTimeFrame, stoppingToken);
+                }
             }
 
             _logger.LogDebug($"Vehicles tracking service is stopping.");
@@ -84,7 +88,7 @@ namespace ACC.Services.Tracking.Scheduling
 
                 var @event = new VehicleStatusChangedEvent(vehicle.Id, status);
 
-                await _eventBus.PublishAsync(@event)
+                await _busPublisher.PublishAsync(@event)
                     .AnyContext();
 
                 vehicle.SetConnectionStatus(status);

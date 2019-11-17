@@ -17,19 +17,19 @@ namespace ACC.Services.Tracking.Handlers
         private readonly ITrackedVehicleRepository _trackedVehicleRepository;
         private readonly ICustomerService _customerService;
         private readonly IVehicleService _vehicleService;
-        private readonly IEventBus _eventBus;
+        private readonly IBusPublisher _busPublisher;
         private readonly ILogger _logger;
 
         public TrackVehicleHandler(ITrackedVehicleRepository trackedVehicleRepository,
             ICustomerService customerService,
             IVehicleService vehicleService,
-            IEventBus eventBus,
+            IBusPublisher busPublisher,
             ILogger<TrackVehicleHandler> logger)
         {
             _trackedVehicleRepository = trackedVehicleRepository;
             _customerService = customerService;
             _vehicleService = vehicleService;
-            _eventBus = eventBus;
+            _busPublisher = busPublisher;
             _logger = logger;
         }
 
@@ -69,12 +69,12 @@ namespace ACC.Services.Tracking.Handlers
                 await _trackedVehicleRepository.AddAsync(trackedVehicle)
                       .AnyContext();
 
-                await _eventBus.PublishAsync(new VehicleTrackedEvent(vehicle.Id))
+                await _busPublisher.PublishAsync(new VehicleTrackedEvent(vehicle.Id))
                     .AnyContext();
             }
             catch (AccException ex)
             {
-                await _eventBus.PublishAsync(new TrackVehicleRejectedEvent(command.VehicleId, customerId, ex.Code, ex.Message))
+                await _busPublisher.PublishAsync(new TrackVehicleRejectedEvent(command.VehicleId, customerId, ex.Code, ex.Message))
                                  .AnyContext();
             }
         }

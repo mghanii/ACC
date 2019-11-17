@@ -50,7 +50,7 @@ namespace ACC.ApiGateway
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseRabbitMq()

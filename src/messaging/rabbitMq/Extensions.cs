@@ -9,11 +9,14 @@ namespace ACC.Messaging.RabbitMq
 {
     public static class Extensions
     {
-        public static IEventBus UseRabbitMq(this IApplicationBuilder app) => new EventBus(app);
+        public static IBusSubscriber UseRabbitMq(this IApplicationBuilder app) => new BusSubscriber(app);
 
         public static void AddRabbitMq(this IServiceCollection services, IConfiguration configuration, string configSectionKey)
         {
-            var options = configuration.GetValue<RabbitMqOptions>(configSectionKey);
+            var options = new RabbitMqOptions();
+            configuration.GetSection(configSectionKey).Bind(options);
+
+            services.AddSingleton(context => options);
 
             var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions
             {
@@ -21,6 +24,7 @@ namespace ACC.Messaging.RabbitMq
             });
 
             services.AddSingleton<IBusClient>(_ => client);
+            services.AddTransient<IBusPublisher, BusPublisher>();
         }
     }
 }

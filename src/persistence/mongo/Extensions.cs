@@ -10,9 +10,16 @@ namespace ACC.Persistence.Mongo
     {
         public static void AddMongoDB(this IServiceCollection services, IConfiguration configuration, string configSectionKey)
         {
+            services.AddSingleton(context =>
+            {
+                var options = new MongoDbOptions();
+                configuration.GetSection(configSectionKey).Bind(options);
+                return options;
+            });
+
             services.AddSingleton<MongoClient>(ctx =>
             {
-                var options = configuration.GetValue<MongoDbOptions>(configSectionKey);
+                var options = ctx.GetService<MongoDbOptions>();
 
                 return new MongoClient(options.ConnectionString);
             });
@@ -24,8 +31,8 @@ namespace ACC.Persistence.Mongo
                 return client.GetDatabase(options.Database);
             });
 
-            services.AddScoped<IDbInitializer, MongoDbInitializer>();
             services.AddScoped<IMongoDbSeeder, MongoDbSeeder>();
+            services.AddScoped<IDbInitializer, MongoDbInitializer>();
         }
 
         public static void AddMongoRepository<TEntity>(this IServiceCollection services, string collectionName)

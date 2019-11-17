@@ -16,7 +16,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
 {
     public class TrackVehicleHandlerTests
     {
-        private IEventBus _eventBus;
+        private IBusPublisher _busPublisher;
         private ILogger<TrackVehicleHandler> _logger;
         private ITrackedVehicleRepository _trackedVehicleRepository;
         private ICustomerService _customerService;
@@ -32,9 +32,9 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
             _trackedVehicleRepository = Substitute.For<ITrackedVehicleRepository>();
             _customerService = Substitute.For<ICustomerService>();
             _vehicleService = Substitute.For<IVehicleService>();
-            _eventBus = Substitute.For<IEventBus>();
+            _busPublisher = Substitute.For<IBusPublisher>();
             _logger = Substitute.For<ILogger<TrackVehicleHandler>>();
-            _trackVehicleHandler = new TrackVehicleHandler(_trackedVehicleRepository, _customerService, _vehicleService, _eventBus, _logger);
+            _trackVehicleHandler = new TrackVehicleHandler(_trackedVehicleRepository, _customerService, _vehicleService, _busPublisher, _logger);
             _vehicleId = Guid.NewGuid().ToString();
             _ipAddress = "216.3.128.12";
             _command = new TrackVehicleCommand(_vehicleId, _ipAddress);
@@ -52,7 +52,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
             await _trackVehicleHandler.HandleAsync(_command);
 
             // Assert
-            await _eventBus
+            await _busPublisher
                 .Received()
                 .PublishAsync(Arg.Is<TrackVehicleRejectedEvent>(e => e.VehicleId == _vehicleId && e.Code == "vehicle_already_tracked"));
         }
@@ -73,7 +73,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
             await _trackVehicleHandler.HandleAsync(_command);
 
             // Assert
-            await _eventBus
+            await _busPublisher
                 .Received()
                 .PublishAsync(Arg.Is<TrackVehicleRejectedEvent>(e => e.VehicleId == _vehicleId && e.Code == "vehicle_not_found"));
         }
@@ -100,7 +100,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
             await _trackVehicleHandler.HandleAsync(_command);
 
             // Assert
-            await _eventBus
+            await _busPublisher
                 .Received()
                 .PublishAsync(Arg.Is<TrackVehicleRejectedEvent>(e => e.VehicleId == _vehicleId
                                                                   && e.CustomerId == customerId
@@ -162,7 +162,7 @@ namespace ACC.Services.Tracking.UnitTests.Handlers
             await _trackVehicleHandler.HandleAsync(_command);
 
             // Assert
-            await _eventBus
+            await _busPublisher
                      .Received()
                      .PublishAsync(Arg.Is<VehicleTrackedEvent>(e => e.VehicleId == _vehicleId));
         }

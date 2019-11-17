@@ -12,15 +12,15 @@ namespace ACC.Services.Vehicles.Handlers
     public class DeleteVehicleHandler : ICommandHandler<DeleteVehicleCommand>
     {
         private readonly IVehicleRepository _vehicleRepository;
-        private readonly IEventBus _eventBus;
+        private readonly IBusPublisher _busPublisher;
         private readonly ILogger _logger;
 
         public DeleteVehicleHandler(IVehicleRepository vehicleRepository,
-            IEventBus eventBus,
+            IBusPublisher busPublisher,
             ILogger<AddVehicleHandler> logger)
         {
             _vehicleRepository = vehicleRepository;
-            _eventBus = eventBus;
+            _busPublisher = busPublisher;
             _logger = logger;
         }
 
@@ -39,7 +39,7 @@ namespace ACC.Services.Vehicles.Handlers
             await _vehicleRepository.UpdateAsync(vehicle)
                               .AnyContext();
 
-            await _eventBus.PublishAsync(new VehicleDeletedEvent(vehicle.Id))
+            await _busPublisher.PublishAsync(new VehicleDeletedEvent(vehicle.Id))
                 .AnyContext();
         }
     }

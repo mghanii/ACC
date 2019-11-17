@@ -1,0 +1,92 @@
+version: '3.4'
+
+services:
+
+  mongo:
+    image: mongo:4
+    ports:
+      - '27017:27017'
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+    - '4369:4369'
+    - '5671:5671'
+    - '5672:5672'
+    - '25672:25672'
+    - '15671:15671'
+    - '15672:15672'
+    healthcheck:
+        test: ['CMD', 'curl', '-f', 'http://localhost:15672']
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
+  acc.gateway.api:
+    image: ${DOCKER_REGISTRY-}acc.gateway.api
+    build:
+      context: .
+      dockerfile: src/gateway/Dockerfile
+    depends_on:
+    - rabbitmq
+    links: 
+    - rabbitmq
+    restart: on-failure
+    ports:
+      - '55100:80'
+      
+  acc.services.tracking:
+    image: ${DOCKER_REGISTRY-}acc.services.tracking
+    build:
+      context: .
+      dockerfile: src/services/tracking/Dockerfile
+    depends_on:
+    - rabbitmq
+    - mongo
+    links: 
+    - rabbitmq
+    - mongo
+    restart: on-failure
+    ports:
+      - '55102:80'
+
+  acc.services.customers:
+    image: ${DOCKER_REGISTRY-}acc.services.customers
+    build:
+      context: .
+      dockerfile: src/services/customers/Dockerfile
+    depends_on:
+    - rabbitmq
+    - mongo
+    links: 
+    - rabbitmq
+    - mongo
+    restart: on-failure
+    ports:
+      - '55101:80'
+
+  acc.services.vehicles:
+    image: ${DOCKER_REGISTRY-}acc.services.vehicles
+    build:
+      context: .
+      dockerfile: src/services/vehicles/Dockerfile
+    depends_on:
+    - rabbitmq
+    - mongo
+    links: 
+    - rabbitmq
+    - mongo
+    restart: on-failure
+    ports:
+      - '55103:80'
+
+  acc.ui.spa:
+    image: ${DOCKER_REGISTRY-}acc.ui.spa
+    build:
+      context: .
+      dockerfile: src/ui/spa/Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '55104:80'
