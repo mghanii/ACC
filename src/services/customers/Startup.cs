@@ -44,7 +44,6 @@ namespace ACC.Services.Customers
             }
 
             //app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();

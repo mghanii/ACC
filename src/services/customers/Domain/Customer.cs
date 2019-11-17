@@ -5,8 +5,8 @@ namespace ACC.Services.Customers.Domain
 {
     public class Customer : EntityBase, IIdentifiable
     {
-        public string Name { get; protected set; }
-        public Address Address { get; protected set; } = new Address();
+        public string Name { get; private set; }
+        public Address Address { get; private set; } = new Address();
 
         public Customer(string id, string name)
             : base(id.ToLower())
@@ -20,6 +20,8 @@ namespace ACC.Services.Customers.Domain
             {
                 throw new AccException("invalid_customer_name", "Customer name can not be null or empty");
             }
+
+            Name = name;
         }
 
         public void SetAddress(string Line1, string Line2, string city, string state, string country, string postCode)

@@ -2,6 +2,7 @@
 using ACC.Services.Customers.Domain;
 using ACC.Services.Customers.Dto;
 using ACC.Services.Customers.Repositories;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

@@ -1,6 +1,7 @@
 ﻿using ACC.ApiGateway.Dto;
 using ACC.ApiGateway.Services;
 using ACC.Common.Extensions;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ namespace ACC.ApiGateway.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableCors("AnyPolicy")]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;

@@ -31,58 +31,60 @@ export class TrackedVehicles extends Component {
         this.setState({ status: event.target.value });
     }
 
-    static renderVehiclesTable(vehicles) {
+    renderVehiclesTable(vehicles) {
         return (
             <div>
-                <div>
-                    <div className="col-md-1">
-                        Customer
-                        </div>
+                <div className="row">
+                    <div className="col-md-1">Customer</div>
                     <div className="col-md-3">
                         {this.renderCustomersSelect(this.state.customers)}
                     </div>
-                    <div className="col-md-1">
-                        Status
-                        </div>
+                    <div className="col-md-1">Status</div>
                     <div className="col-md-3">
-                        <select value={this.state.status} onChange={this.handleStatusChange}>
+                        <select className="form-control" value={this.state.status} onChange={this.handleStatusChange}>
+                            <option value="">All</option>
                             <option value="Connected">Connected</option>
-                            <option value="Dicconnected">Disonnected</option>
+                            <option value="Disconnected">Disonnected</option>
                         </select>
                     </div>
-                    <div className="col-md-2">
-                        <button type="button" value="Search" onClick={() => this.populateVehiclesData()} />
+                    <div className="col-md-4">
+                        <button type="button" className="btn btn-danger" value="" onClick={() => this.populateVehiclesData()} >Search</button>
                     </div>
                 </div>
-
-                <table className='table table-striped' aria-labelledby="tabelLabel">
-                    <thead>
-                        <tr>
-                            <th>Vehicle Id</th>
-                            <th>Reg Nr. </th>
-                            <th>Status </th>
-                            <th>Customer</th>
-                            <th>Customer Address</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {vehicles.map(vehicle =>
-                            <tr key={vehicle.id}>
-                                <td>{vehicle.regNr}</td>
-                                <td>{vehicle.status}</td>
-                                <td>{vehicle.customerName}</td>
-                                <td>{vehicle.customerAddress}</td>
+                <br />
+                <br />
+                <div className="row">
+                    <table className='table table-striped' aria-labelledby="tabelLabel">
+                        <thead>
+                            <tr>
+                                <th>Vehicle Id</th>
+                                <th>Reg Nr. </th>
+                                <th>Status </th>
+                                <th>Customer</th>
+                                <th>Customer Address</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {vehicles.map(vehicle =>
+                                <tr key={vehicle.id}>
+                                    <td>{vehicle.id}</td>
+                                    <td>{vehicle.regNr}</td>
+                                    <td>{vehicle.status}</td>
+                                    <td>{vehicle.customerName}</td>
+                                    <td>{vehicle.customerAddress}</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
 
-    static renderCustomersSelect(customers) {
+    renderCustomersSelect(customers) {
         return (
-            <select value={this.state.customerId} onChange={this.handleCustomerChange}>
+            <select className="form-control" value={this.state.customerId} onChange={this.handleCustomerChange}>
+                <option value="">All</option>
                 {customers.map(c => <option value={c.id}>{c.name}</option>)}
             </select>
         );
@@ -91,11 +93,12 @@ export class TrackedVehicles extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : TrackedVehicles.renderVehiclesTable(this.state.trackedVehicles);
+            : this.renderVehiclesTable(this.state.trackedVehicles);
 
         return (
             <div>
                 <h1 id="tabelLabel" >Tracked Vehicles</h1>
+                <br />
                 {contents}
             </div>
         );

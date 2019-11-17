@@ -4,6 +4,7 @@ using ACC.ApiGateway.Queries;
 using ACC.ApiGateway.Services;
 using ACC.Common.Extensions;
 using ACC.Common.Messaging;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ namespace ACC.ApiGateway.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableCors("AnyPolicy")]
     public class TrackingController : ControllerBase
     {
         private readonly ITrackingService _trackingService;

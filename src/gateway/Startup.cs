@@ -40,6 +40,14 @@ namespace ACC.ApiGateway
 
             services.AddScoped<IEventHandler<VehicleStatusChangedEvent>, VehicleStatusChangedHandler>();
             services.AddRabbitMq(Configuration, "rabbitmq");
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AnyPolicy", builder =>
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +61,7 @@ namespace ACC.ApiGateway
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthorization();
 
