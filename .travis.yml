@@ -3,8 +3,8 @@ mono: none
 dotnet: 3.0
 
 install:
-- dotnet restore
+- dotnet restore ACC.sln
 
 script:
- - dotnet build
- - dotnet test
+ - dotnet build ACC.sln
+ - dotnet test ACC.sln
