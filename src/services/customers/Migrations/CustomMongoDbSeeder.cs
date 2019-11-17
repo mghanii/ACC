@@ -26,17 +26,27 @@ namespace ACC.Services.Customers.Migrations
             {
                 var collection = Database.GetCollection<Customer>("customers");
 
-                foreach (var item in _seedData)
+                foreach (var item in GetSeedData())
                 {
                     await collection.InsertOneAsync(item);
                 }
             }
         }
 
-        private readonly Customer[] _seedData = new[] {
+        private static Customer[] GetSeedData()
+        {
+            var data = new Customer[]
+                  {
                      new Customer("kallesgrustransporter","Kalles Grustransporter AB"),
                      new Customer("johansbulk","Johans Bulk AB"),
                      new Customer("haraldsvardetransporter","Haralds Värdetransporter AB"),
                    };
+
+            data[0].SetAddress("Cementvägen 8", "", "Södertälje", "", "Sweden", "111 11");
+            data[1].SetAddress("Balkvägen 12", "", "Stockholm", "", "Sweden", "222 22");
+            data[2].SetAddress("Budgetvägen 8", "", "Uppsala", "", "Sweden", "333 33");
+
+            return data;
+        }
     }
 }

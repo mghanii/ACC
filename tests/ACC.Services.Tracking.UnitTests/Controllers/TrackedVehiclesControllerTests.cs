@@ -48,7 +48,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
             var expected = _dtos.Where(x => x.Status == TrackedVehicleStatus.Connected);
 
             _queries
-                  .GetAsync(query)
+                  .GetAsync(Arg.Any<GetTrackedVehiclesQuery>())
                   .Returns(e => _dtos.Where(x => x.Status == ((GetTrackedVehiclesQuery)e[0]).Status));
 
             // Act
@@ -72,7 +72,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
             var expected = _dtos.Where(x => x.CustomerId == TestData[0].CustomerId);
 
             _queries
-                  .GetAsync(query)
+                  .GetAsync(Arg.Any<GetTrackedVehiclesQuery>())
                   .Returns(e => _dtos.Where(x => x.CustomerId == ((GetTrackedVehiclesQuery)e[0]).CustomerId));
 
             // Act
@@ -98,7 +98,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
                                          && x.Status == TrackedVehicleStatus.Connected);
 
             _queries
-                  .GetAsync(query)
+                  .GetAsync(Arg.Any<GetTrackedVehiclesQuery>())
                   .Returns(e => _dtos.Where(x => x.CustomerId == ((GetTrackedVehiclesQuery)e[0]).CustomerId
                                               && x.Status == ((GetTrackedVehiclesQuery)e[0]).Status));
 
@@ -120,7 +120,7 @@ namespace ACC.Services.Tracking.UnitTests.Controllers
             var expected = _dtos;
 
             _queries
-                  .GetAsync(query)
+                  .GetAsync(Arg.Any<GetTrackedVehiclesQuery>())
                   .Returns(e => _dtos);
 
             // Act
