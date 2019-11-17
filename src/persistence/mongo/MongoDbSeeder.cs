@@ -16,17 +16,8 @@ namespace ACC.Persistence.Mongo
 
         public async Task SeedAsync()
         {
-            var cursor = await Database.ListCollectionsAsync()
+            await CustomSeedAsync()
                 .AnyContext();
-
-            var collections = await cursor.ToListAsync()
-                .AnyContext();
-
-            if (!collections.Any())
-            {
-                await CustomSeedAsync()
-                    .AnyContext();
-            }
         }
 
         protected virtual async Task CustomSeedAsync()

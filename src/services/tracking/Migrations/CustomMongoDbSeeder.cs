@@ -2,6 +2,8 @@
 using ACC.Services.Tracking.Domain;
 using MongoDB.Driver;
 using System.Threading.Tasks;
+using ACC.Common.Extensions;
+using System.Linq;
 
 namespace ACC.Services.Tracking.Migrations
 {
@@ -14,9 +16,21 @@ namespace ACC.Services.Tracking.Migrations
 
         protected override async Task CustomSeedAsync()
         {
-            var collection = Database.GetCollection<TrackedVehicle>("vehicles");
+            var cursor = await Database.ListCollectionsAsync()
+                .AnyContext();
 
-            await collection.InsertManyAsync(_seedData);
+            var collections = await cursor.ToListAsync()
+                .AnyContext();
+
+            if (!collections.Any())
+            {
+                var collection = Database.GetCollection<TrackedVehicle>("vehicles");
+
+                foreach (var item in _seedData)
+                {
+                    await collection.InsertOneAsync(item);
+                }
+            }
         }
 
         private readonly TrackedVehicle[] _seedData = new[] {

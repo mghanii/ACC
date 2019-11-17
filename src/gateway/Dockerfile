@@ -17,4 +17,5 @@ RUN dotnet publish "ACC.ApiGateway.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_ENVIRONMENT docker
 ENTRYPOINT ["dotnet", "ACC.ApiGateway.dll"]

@@ -65,7 +65,7 @@ namespace ACC.Services.Vehicles
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
+            //app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
 
             app.UseRabbitMq();
         }

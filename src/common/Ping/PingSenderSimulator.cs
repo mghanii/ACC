@@ -10,7 +10,7 @@ namespace ACC.Common.Ping
 
         public async Task<PingReply> SendAsync(string hostNameOrAddress, int millisecondsTimeout)
         {
-            var roundtripTime = _random.RandInt(max: millisecondsTimeout);
+            var roundtripTime = _random.RandNonNegative(millisecondsTimeout);
 
             var ipStatus = _random.RandEnum<IPStatus>();
 

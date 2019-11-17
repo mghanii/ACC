@@ -8,6 +8,7 @@ using ACC.Services.Tracking.Domain;
 using ACC.Services.Tracking.Events;
 using ACC.Services.Tracking.Handlers;
 using ACC.Services.Tracking.Middlewares;
+using ACC.Services.Tracking.Migrations;
 using ACC.Services.Tracking.Options;
 using ACC.Services.Tracking.Queries;
 using ACC.Services.Tracking.Repositories;
@@ -51,6 +52,7 @@ namespace ACC.Services.Tracking
 
             services.AddRabbitMq(Configuration, "rabbitmq");
             services.AddMongoDB(Configuration, "mongo");
+            services.AddScoped<IMongoDbSeeder, CustomMongoDbSeeder>();
 
             services.AddMongoRepository<TrackedVehicle>("vehicles");
             services.AddMongoRepository<TrackingHistory>("history");
@@ -85,8 +87,6 @@ namespace ACC.Services.Tracking
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseDbInitialization();
 
             app.UseRabbitMq()
                 .SubscribeCommand<TrackVehicleCommand>("gateway")

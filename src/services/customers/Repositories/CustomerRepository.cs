@@ -9,12 +9,12 @@ namespace ACC.Services.Customers.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private readonly IRepository<Customer, string> _repository;
-        private readonly IBusSubscriber _eventBus;
+        private readonly IBusPublisher _busPublisher;
 
-        public CustomerRepository(IRepository<Customer, string> repository, IBusSubscriber eventBus)
+        public CustomerRepository(IRepository<Customer, string> repository, IBusPublisher busPublisher)
         {
             _repository = repository;
-            _eventBus = eventBus;
+            _busPublisher = busPublisher;
         }
 
         public async Task<Customer> GetAsync(string id)

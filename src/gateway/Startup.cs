@@ -1,5 +1,7 @@
 using ACC.ApiGateway.Events;
+using ACC.ApiGateway.Handlers;
 using ACC.ApiGateway.Services;
+using ACC.Common.Messaging;
 using ACC.Messaging.RabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,7 @@ namespace ACC.ApiGateway
                 client.BaseAddress = new Uri(Configuration["trackingServiceUrl"]);
             });
 
+            services.AddScoped<IEventHandler<VehicleStatusChangedEvent>, VehicleStatusChangedHandler>();
             services.AddRabbitMq(Configuration, "rabbitmq");
         }
 
@@ -54,7 +57,7 @@ namespace ACC.ApiGateway
             });
 
             app.UseRabbitMq()
-                .SubscribeEvent<VehicleStatusChangedEvent>("tracking");
+              .SubscribeEvent<VehicleStatusChangedEvent>("tracking");
         }
     }
 }

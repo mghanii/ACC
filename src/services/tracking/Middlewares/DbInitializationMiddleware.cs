@@ -15,7 +15,7 @@ namespace ACC.Services.Tracking.Middlewares
 
         public async Task InvokeAsync(HttpContext context, IDbInitializer dbInitializer)
         {
-            dbInitializer.InitializeAsync();
+            await dbInitializer.InitializeAsync();
 
             await _next(context);
         }
