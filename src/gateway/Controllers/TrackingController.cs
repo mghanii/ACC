@@ -47,7 +47,7 @@ namespace ACC.ApiGateway.Controllers
             return Ok(results);
         }
 
-        [HttpPost]
+        [HttpPost("start")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public async Task<IActionResult> TrackVehicle([FromBody] TrackVehicleCommand command)
@@ -65,7 +65,7 @@ namespace ACC.ApiGateway.Controllers
             return Accepted();
         }
 
-        [HttpPost]
+        [HttpPost("stop")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public async Task<IActionResult> StopVehicleTracking([FromBody] StopVehicleTrackingCommand command)
