@@ -8,9 +8,9 @@ Using **ACC** you can track a number of vehicles by periodically sending a ping 
 ### Architecture overview
 
 
-![Getting Started](docs/architecture.png)
+![Getting Started](docs/Architecture.png)
 
-**ACC** is cross platform application as it's build using .net core and docker containers.
+**ACC** is a cross platform application since it's build using .net core and docker containers.
 It consists of multiple autonomous microservices each one has its own database and uses message queue (RabbitMQ) for inter service communications.
 
 - **Vehicles Service**: it's resposible for managing and storing vehicle information such as vehicle id, registeration number and some info about its owner that's represented in the system as a <b>Customer</b> such as name and address. To reduce interservice communications, it's recommended to duplicate some data across different services.
