@@ -65,7 +65,7 @@ When vehicle status changes <b>Tracking service</b> publishes VehicleStatusChang
 ### Docker compose deployment
 
 - Docker-compose.yml contains the definition of all images needed for running application which includes mongo & rabbitmq images.
-- Use docker-compose upcommand to create and start containers.
+- Use docker-compose up command to create and start containers.
 
 
 
