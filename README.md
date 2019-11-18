@@ -67,8 +67,21 @@ When vehicle status changes <b>Tracking service</b> publishes VehicleStatusChang
 - Docker-compose.yml contains the definition of all images needed for running application which includes mongo & rabbitmq images.
 - Use docker-compose up command to create and start containers.
 
+### Suggested enhancements
 
+This application isn't production ready. It's simple enough & sufficient (I hope) for the purpose I created it for.
+However, there are many things to worry about if you want to create a production ready microservices application such as:
 
+- Configuration, secrets, network locations of external services such as database and message brokers (running them in containers is a bad idea).
+- Health checks
+- Logging
+- Metrics
+- Consistency 
+- Load balancing
+- Retry
+- Versioning
+
+  
 
 
 
