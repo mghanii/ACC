@@ -16,7 +16,7 @@ namespace ACC.Messaging.RabbitMq
 
         public BusSubscriber(IApplicationBuilder app)
         {
-            _serviceProvider = (IServiceProvider)app.ApplicationServices.GetService(typeof(IServiceProvider));
+            _serviceProvider = app.ApplicationServices.GetService<IServiceProvider>();
             _busClient = (IBusClient)_serviceProvider.GetService(typeof(IBusClient));
             _rabbitMqOptions = (RabbitMqOptions)_serviceProvider.GetService(typeof(RabbitMqOptions));
             _scopeFactory = _serviceProvider.GetService<IServiceScopeFactory>();
@@ -27,7 +27,7 @@ namespace ACC.Messaging.RabbitMq
         {
             using (var scope = _scopeFactory.CreateScope())
             {
-                var handler = (ICommandHandler<TCommand>)scope.ServiceProvider.GetService(typeof(ICommandHandler<TCommand>));
+                var handler = scope.ServiceProvider.GetService<ICommandHandler<TCommand>>();
 
                 _busClient.SubscribeAsync<TCommand>(msg => handler.HandleAsync(msg),
                                 ctx => ctx.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TCommand>(@namespace))));
@@ -41,7 +41,7 @@ namespace ACC.Messaging.RabbitMq
         {
             using (var scope = _scopeFactory.CreateScope())
             {
-                var handler = (IEventHandler<TEvent>)scope.ServiceProvider.GetRequiredService(typeof(IEventHandler<TEvent>));
+                var handler = scope.ServiceProvider.GetService<IEventHandler<TEvent>>();
 
                 _busClient.SubscribeAsync<TEvent>(msg => handler.HandleAsync(msg),
                     ctx => ctx.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TEvent>(@namespace))));
