@@ -40,7 +40,7 @@ A <b>reactjs</b> single page application which contains only one screen to displ
 ![Getting Started](docs/screenshots/listAll.png)
 
 The changes which occure to vehicle status in the server isn't pushed to client so the client has to pull new data periodically by clicking search button.
-When vehicle status changes <b>Tracking service</b> publishes VehicleStatusChangedEvent. this event may be used to instantly push that change to client using any real time communication framework/library such as SignalR.
+When vehicle status changes, <b>Tracking service</b> publishes VehicleStatusChangedEvent which can be used to notify interested services so that it can instantly push that change to client using any real time communication framework/library such as SignalR.
 
 ### Used Techonlogies/Tools/Frameworks:
 
