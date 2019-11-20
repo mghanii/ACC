@@ -5,15 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace ACC.Services.Tracking.Middlewares
+namespace ACC.ApiGateway.Extensions
 {
-    public static class Extensions
+    public static class ExceptionMiddlewareExtensions
     {
-        public static IApplicationBuilder UseDbInitialization(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<DbInitializationMiddleware>();
-        }
-
         public static void ConfigureExceptionHandler(this IApplicationBuilder app)
         {
             var logger = app.ApplicationServices.GetService<ILogger>();

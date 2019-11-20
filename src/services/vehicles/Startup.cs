@@ -4,6 +4,7 @@ using ACC.Messaging.RabbitMq;
 using ACC.Persistence.Mongo;
 using ACC.Services.Vehicles.Commands;
 using ACC.Services.Vehicles.Domain;
+using ACC.Services.Vehicles.Extensions;
 using ACC.Services.Vehicles.Handlers;
 using ACC.Services.Vehicles.Migrations;
 using ACC.Services.Vehicles.Queries;
@@ -56,6 +57,7 @@ namespace ACC.Services.Vehicles
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureExceptionHandler();
             // app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace ACC.UI.SPA
 {
@@ -58,8 +59,7 @@ namespace ACC.UI.SPA
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
-                var envi = env.IsDevelopment();
+                spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
                 if (env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");

@@ -1,4 +1,5 @@
 using ACC.ApiGateway.Events;
+using ACC.ApiGateway.Extensions;
 using ACC.ApiGateway.Handlers;
 using ACC.ApiGateway.Services;
 using ACC.Common.Messaging;
@@ -64,6 +65,7 @@ namespace ACC.ApiGateway
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureExceptionHandler();
             // app.UseHttpsRedirection();
 
             app.UseSwagger();

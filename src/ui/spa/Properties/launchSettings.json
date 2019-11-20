@@ -28,11 +28,9 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "ASPNETCORE_URLS": "http://+:80"
-      },
-      "httpPort": 5008,
-      "useSSL": false,
-      "sslPort": 44351
+        "ASPNETCORE_URLS": "http://+:80",
+        "ASPNETCORE_ENVIRONMENT": "Docker"
+      }
     }
   }
 }

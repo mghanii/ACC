@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RawRabbit;
 using RawRabbit.Instantiation;
+using Polly;
+using System;
 
 namespace ACC.Messaging.RabbitMq
 {
@@ -13,18 +15,25 @@ namespace ACC.Messaging.RabbitMq
 
         public static void AddRabbitMq(this IServiceCollection services, IConfiguration configuration, string configSectionKey)
         {
+            var retry = Policy
+                       .Handle<Exception>()
+                       .WaitAndRetryForever(retryAttempt => TimeSpan.FromMilliseconds(30));
+
             var options = new RabbitMqOptions();
             configuration.GetSection(configSectionKey).Bind(options);
 
             services.AddSingleton(context => options);
 
-            var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions
+            retry.Execute(() =>
             {
-                ClientConfiguration = options
-            });
+                var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions
+                {
+                    ClientConfiguration = options
+                });
 
-            services.AddSingleton<IBusClient>(_ => client);
-            services.AddTransient<IBusPublisher, BusPublisher>();
+                services.AddSingleton<IBusClient>(_ => client);
+                services.AddTransient<IBusPublisher, BusPublisher>();
+            });
         }
     }
 }

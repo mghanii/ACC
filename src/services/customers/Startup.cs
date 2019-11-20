@@ -1,6 +1,7 @@
 using ACC.Messaging.RabbitMq;
 using ACC.Persistence.Mongo;
 using ACC.Services.Customers.Domain;
+using ACC.Services.Customers.Extensions;
 using ACC.Services.Customers.Migrations;
 using ACC.Services.Customers.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -42,10 +43,9 @@ namespace ACC.Services.Customers
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.ConfigureExceptionHandler();
             //app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
