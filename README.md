@@ -58,7 +58,7 @@ When vehicle status changes <b>Tracking service</b> publishes VehicleStatusChang
 
 ### Software requirements to set up development environment
 
-- Visual Studio 2019 version 16.3 or later [vs 2017 doesn't support .NET Standard 2.1 or .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0)
+- Visual Studio 2019 version 16.3 or later as [VS 2017 doesn't support .NET Standard 2.1 or .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0)
 - Latest .NET Core 3.0 SDK from [https://www.microsoft.com/net/download](https://www.microsoft.com/net/download)
 - Docker Community Edition.
 
