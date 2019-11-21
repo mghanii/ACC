@@ -11,7 +11,7 @@ namespace ACC.Services.Vehicles.Commands
         public string Color { get; }
         public string Model { get; }
         public string Description { get; }
-        public string CustomerId { get; }
+        public string OwnerId { get; }
 
         [JsonConstructor]
         public AddVehicleCommand(string id,
@@ -20,7 +20,7 @@ namespace ACC.Services.Vehicles.Commands
            string color,
            string model,
            string description,
-           string customerId)
+           string ownerId)
         {
             Id = id;
             RegNr = regNr;
@@ -28,7 +28,7 @@ namespace ACC.Services.Vehicles.Commands
             Color = color;
             Model = model;
             Description = description;
-            CustomerId = customerId;
+            OwnerId = ownerId;
         }
     }
 }

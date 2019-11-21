@@ -1,14 +1,27 @@
-﻿namespace ACC.Services.Vehicles.Dto
+﻿using ACC.Services.Vehicles.Domain;
+
+namespace ACC.Services.Vehicles.Dto
 {
     public class VehicleDto
     {
-        public string Id { get; set; }
-        public string RegNr { get; set; }
-        public string Color { get; set; }
-        public string Brand { get; set; }
-        public string Model { get; set; }
-        public string Description { get; set; }
-        public string CustomerId { get; set; }
-        public string CustomerName { get; set; }
+        public string Id { get; }
+        public string RegNr { get; }
+        public string Color { get; }
+        public string Brand { get; }
+        public string Model { get; }
+        public string Description { get; }
+        public string OwnerId { get; }
+        public string OwnerName { get; }
+
+        public VehicleDto(Vehicle vehicle)
+        {
+            Id = vehicle.Id;
+            RegNr = vehicle.RegNr;
+            Color = vehicle.Color;
+            Brand = vehicle.Brand;
+            Model = vehicle.Model;
+            OwnerId = vehicle.OwnerId;
+            OwnerName = vehicle.OwnerName;
+        }
     }
 }

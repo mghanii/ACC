@@ -1,5 +1,4 @@
-﻿using ACC.Services.Tracking.Domain;
-using System;
+﻿using System;
 
 namespace ACC.Services.Tracking.Dto
 {

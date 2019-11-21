@@ -54,14 +54,14 @@ namespace ACC.Services.Tracking.Handlers
                 {
                     throw new AccException("vehicle_not_found", $"Vehicle: '{command.VehicleId}' was not found");
                 }
-                customerId = vehicle.CustomerId;
+                customerId = vehicle.OwnerId;
 
-                var customer = await _customerService.GetAsync(vehicle.CustomerId)
+                var customer = await _customerService.GetAsync(vehicle.OwnerId)
                         .AnyContext();
 
                 if (customer == null)
                 {
-                    throw new AccException("customer_not_found", $"Customer: '{vehicle.CustomerId}' was not found");
+                    throw new AccException("customer_not_found", $"Customer: '{vehicle.OwnerId}' was not found");
                 }
 
                 var trackedVehicle = new TrackedVehicle(vehicle.Id, command.IPAddress, vehicle.RegNr, customer.Id.ToLower(), customer.Name, customer.Address);

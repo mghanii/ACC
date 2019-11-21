@@ -5,6 +5,6 @@ namespace ACC.Services.Vehicles.Services
 {
     public interface ICustomerService
     {
-        Task<CustomerDto> GetAsync(string id);
+        Task<VehicleOwnerDto> GetAsync(string id);
     }
 }

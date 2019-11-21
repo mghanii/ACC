@@ -31,12 +31,12 @@ namespace ACC.Services.Vehicles.Handlers
 
         public async Task HandleAsync(AddVehicleCommand command)
         {
-            var customer = await _customerService.GetAsync(command.CustomerId)
+            var owner = await _customerService.GetAsync(command.OwnerId)
                              .AnyContext();
 
-            if (customer == null)
+            if (owner == null)
             {
-                throw new AccException("customer_not_found", $"Customer: '{command.CustomerId}' was not found");
+                throw new AccException("customer_not_found", $"Customer: '{command.OwnerId}' was not found");
             }
 
             var vehicle = new Vehicle(command.Id,
@@ -45,13 +45,13 @@ namespace ACC.Services.Vehicles.Handlers
                         command.Brand,
                         command.Model,
                         command.Description,
-                        command.CustomerId,
-                        customer.Name);
+                        command.OwnerId,
+                        owner.Name);
 
             await _vehicleRepository.AddAsync(vehicle)
                               .AnyContext();
 
-            var @event = new VehicleAddedEvent(vehicle.Id, vehicle.RegNr, vehicle.CustomerId);
+            var @event = new VehicleAddedEvent(vehicle.Id, vehicle.RegNr, vehicle.OwnerId);
 
             await _busPublisher.PublishAsync(@event)
                 .AnyContext();

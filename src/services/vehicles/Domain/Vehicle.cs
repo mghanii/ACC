@@ -9,8 +9,8 @@ namespace ACC.Services.Vehicles.Domain
         public string Model { get; private set; }
         public string Color { get; private set; }
         public string Description { get; private set; }
-        public string CustomerId { get; private set; }
-        public string CustomerName { get; private set; }
+        public string OwnerId { get; private set; }
+        public string OwnerName { get; private set; }
         public bool Deleted { get; private set; }
 
         public Vehicle(string id,
@@ -19,8 +19,8 @@ namespace ACC.Services.Vehicles.Domain
                        string brand,
                        string model,
                        string describtion,
-                       string customerId,
-                       string customerName)
+                       string ownerId,
+                       string ownerName)
               : base(id)
         {
             RegNr = regNr;
@@ -28,8 +28,8 @@ namespace ACC.Services.Vehicles.Domain
             Color = color;
             Model = model;
             Description = describtion;
-            CustomerId = customerId;
-            CustomerName = customerName;
+            OwnerId = ownerId;
+            OwnerName = ownerName;
         }
 
         public void SetDeleteFlag()

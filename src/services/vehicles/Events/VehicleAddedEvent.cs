@@ -5,14 +5,14 @@ namespace ACC.Services.Vehicles.Events
     public class VehicleAddedEvent : IEvent
     {
         public string Id { get; }
-        public string RegistrationNumber { get; }
-        public string CustomerId { get; }
+        public string RegNr { get; }
+        public string OwnerId { get; }
 
-        public VehicleAddedEvent(string id, string registrationNumber, string customerId)
+        public VehicleAddedEvent(string id, string regNr, string ownerId)
         {
             Id = id;
-            RegistrationNumber = registrationNumber;
-            CustomerId = customerId;
+            RegNr = regNr;
+            OwnerId = ownerId;
         }
     }
 }

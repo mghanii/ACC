@@ -30,18 +30,7 @@ namespace ACC.Services.Vehicles.Queries
                 return null;
             }
 
-            var dto = new VehicleDto
-            {
-                Id = vehicle.Id,
-                RegNr = vehicle.RegNr,
-                Color = vehicle.Color,
-                Brand = vehicle.Brand,
-                Model = vehicle.Model,
-                CustomerId = vehicle.CustomerId,
-                CustomerName = vehicle.CustomerName
-            };
-
-            return dto;
+            return new VehicleDto(vehicle);
         }
 
         public async Task<IEnumerable<VehicleDto>> GetAsync(GetVehiclesQuery query)
@@ -49,20 +38,7 @@ namespace ACC.Services.Vehicles.Queries
             var vehicles = await _vehicleRepository.GetAsync(_ => true)
                                     .AnyContext();
 
-            return vehicles.Select(v =>
-            {
-                return new VehicleDto
-                {
-                    Id = v.Id,
-                    RegNr = v.RegNr,
-                    Color = v.Color,
-                    Brand = v.Brand,
-                    Model = v.Model,
-                    Description = v.Description,
-                    CustomerId = v.CustomerId,
-                    CustomerName = v.CustomerName
-                };
-            });
+            return vehicles.Select(v => new VehicleDto(v));
         }
     }
 }

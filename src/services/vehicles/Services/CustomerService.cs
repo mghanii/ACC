@@ -18,12 +18,12 @@ namespace ACC.Services.Vehicles.Services
             _logger = logger;
         }
 
-        public async Task<CustomerDto> GetAsync(string id)
+        public async Task<VehicleOwnerDto> GetAsync(string id)
         {
             var content = await _httpClient.GetStringAsync($"/api/customers/{id}")
                       .AnyContext(); ;
 
-            return JsonConvert.DeserializeObject<CustomerDto>(content);
+            return JsonConvert.DeserializeObject<VehicleOwnerDto>(content);
         }
     }
 }
